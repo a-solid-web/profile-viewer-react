@@ -15,7 +15,9 @@ class OverviewPage extends React.Component {
 
     this.addRequest = this.addRequest.bind(this);
     this.removeRequest = this.removeRequest.bind(this);
-    this.fetchNotificationAddresses = this.fetchNotificationAddresses.bind(this);
+    this.fetchNotificationAddresses = this.fetchNotificationAddresses.bind(
+      this
+    );
     this.fetchNotification = this.fetchNotification.bind(this);
 
     this.state = {
@@ -24,29 +26,35 @@ class OverviewPage extends React.Component {
     };
   }
 
-  fetchNotificationAddresses(webId){
+  fetchNotificationAddresses(webId) {
     let inboxStore = rdf.graph();
     let inboxFetcher = new rdf.Fetcher(inboxStore);
 
     let inboxAddress = webId.replace("profile/card#me", "inbox");
 
-    inboxFetcher.load(inboxAddress).then((response) => {
-      const notificationAddresses = inboxStore.each(rdf.sym(inboxAddress), LDP("contains"));
-      notificationAddresses.forEach((notificationAddress) => {
-        const notificationName = notificationAddress.value.split("/")[3]
-        this.fetchNotification(inboxAddress + "/" + notificationName)
-      })
-    })
+    inboxFetcher.load(inboxAddress).then(response => {
+      const notificationAddresses = inboxStore.each(
+        rdf.sym(inboxAddress),
+        LDP("contains")
+      );
+      notificationAddresses.forEach(notificationAddress => {
+        const notificationName = notificationAddress.value.split("/")[3];
+        this.fetchNotification(inboxAddress + "/" + notificationName);
+      });
+    });
   }
 
-  fetchNotification(notificationAddress){
+  fetchNotification(notificationAddress) {
     let notificationStore = rdf.graph();
     let notificationFetcher = new rdf.Fetcher(notificationStore);
 
-    notificationFetcher.load(notificationAddress).then((response) => {
-      const sender = notificationStore.any(rdf.sym(notificationAddress), ACT("actor"));
-      console.log(sender.value)
-    })
+    notificationFetcher.load(notificationAddress).then(response => {
+      const sender = notificationStore.any(
+        rdf.sym(notificationAddress),
+        ACT("actor")
+      );
+      console.log(sender.value);
+    });
   }
 
   addRequest(newRequest) {
@@ -72,7 +80,7 @@ class OverviewPage extends React.Component {
   getRequests() {
     if (this.state.requests.length === 0) {
       return (
-        <div className="requestcards-card-request">
+        <div className="requestcard-request">
           Looks like you don't have any requests at the moment
         </div>
       );
@@ -90,18 +98,18 @@ class OverviewPage extends React.Component {
     }
   }
 
-  componentDidMount(){
-    auth.trackSession((session) => {
-      if (!session){
-        console.log("You are not logged in...")
+  componentDidMount() {
+    auth.trackSession(session => {
+      if (!session) {
+        console.log("You are not logged in...");
       } else {
         this.setState({
           webId: session.webId
-        })
+        });
       }
 
       this.fetchNotificationAddresses(this.state.webId);
-    })
+    });
   }
 
   render() {
