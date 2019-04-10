@@ -46,11 +46,19 @@ class Profile extends React.Component {
         console.log("You are not logged in");
       } else {
         const webId = session.webId;
+<<<<<<< HEAD
         const privateCard = webId.replace("profile/card#me", "private/card")
 
         const store = rdf.graph();
         const fetcher = new rdf.Fetcher(store);
         const updater = new rdf.UpdateManager(store); 
+=======
+        const privateCard = webId.replace("profile", "private")
+
+        const store = rdf.graph();
+        const fetcher = new rdf.Fetcher(store);
+        const updater = new rdf.UpdateManager(store);
+>>>>>>> 2f27992bd565f3c3cfecef1e2f85efd4310ee996
 
         fetcher.load(webId).then(() => {
           const names = store.each(rdf.sym(webId), FOAF("name")).map(name => {
@@ -99,7 +107,12 @@ class Profile extends React.Component {
                 ? telephoneType.value.split("#")[1] + "-Phone"
                 : "Phone";
 
-              return [telephoneValue, telephoneBlankId, telephoneTypeValue, "public"];
+              return [
+                telephoneValue,
+                telephoneBlankId,
+                telephoneTypeValue,
+                "public"
+              ];
             });
 
           this.setState({
@@ -404,6 +417,78 @@ class Profile extends React.Component {
     this.setState({ editTelephone: !this.state.editTelephone });
   }
 
+  toggleTelephoneAccess(e) {
+    const telephoneBlankId = e.target.id.split("?")[0];
+    const telephoneValue = e.target.id.split("?")[1];
+    const telephoneDoc = telephoneBlankId.split("#")[0];
+    console.log(telephoneDoc);
+
+    const store = rdf.graph();
+    const updater = new rdf.UpdateManager(store);
+
+    const access = e.target.innerHTML;
+
+    if (access === "public") {
+      const del = [
+        rdf.st(
+          rdf.sym(telephoneDoc),
+          VCARD("hasTelephone"),
+          rdf.lit(telephoneValue),
+          rdf.sym(telephoneDoc).doc()
+        )
+      ];
+
+      const ins = [
+        rdf.st(
+          rdf.sym(telephoneDoc),
+          VCARD("hasTelephone"),
+          rdf.lit("Request Access"),
+          rdf.sym(telephoneDoc).doc()
+        ),
+        rdf.st(
+          rdf.sym(telephoneDoc),
+          VCARD("hasTelephone"),
+          rdf.lit("Request Access"),
+          rdf.sym(telephoneDoc.replace("profile", "private")).doc()
+        )
+      ];
+
+      updater.update(del, ins, (uri, ok, message) => {
+        if (ok) console.log("Made public");
+        else alert(message);
+      })
+    } else if (access === "private"){
+      const del = [
+        rdf.st(
+          rdf.sym(telephoneDoc),
+          VCARD("hasTelephone"),
+          rdf.lit("Request Access"),
+          rdf.sym(telephoneDoc).doc()
+        ),
+        rdf.st(
+          rdf.sym(telephoneDoc),
+          VCARD("hasTelephone"),
+          rdf.lit(telephoneValue),
+          rdf.sym(telephoneDoc.replace("profile", "private")).doc()
+        )
+      ];
+
+      const ins = [
+        rdf.st(
+          rdf.sym(telephoneDoc),
+          VCARD("hasTelephone"),
+          rdf.lit(telephoneValue),
+          rdf.sym(telephoneDoc).doc()
+        )
+      ];
+      
+      updater.update(del, ins, (uri, ok, message) => {
+        if (ok) console.log("Made public");
+        else alert(message);
+      })
+    }
+  }
+
   componentDidMount() {
     this.fetchUser();
   }
@@ -419,8 +504,8 @@ class Profile extends React.Component {
           onChange={this.getNewName.bind(this)}
           onClick={this.toggleEditName.bind(this)}
         />
-      )
-    })
+      );
+    });
 
     let jobSlotMarkup = this.state.job.map((job, index) => {
       return (
@@ -433,7 +518,7 @@ class Profile extends React.Component {
           onClick={this.toggleEditJob.bind(this)}
         />
       );
-    })
+    });
 
     let bioSlotMarkup = this.state.bio.map((bio, index) => {
       return (
@@ -445,7 +530,7 @@ class Profile extends React.Component {
           onChange={this.getNewBio.bind(this)}
           onClick={this.toggleEditBio.bind(this)}
         />
-      )
+      );
     });
 
     let emailSlotsMarkup = this.state.emails.map((email, index) => {
@@ -470,6 +555,7 @@ class Profile extends React.Component {
           onChange={this.getNewTelephone.bind(this)}
           onClick={this.toggleEditTelephone.bind(this)}
           onBlur={this.applyTelephoneChanges.bind(this)}
+          onToggleAccess={this.toggleTelephoneAccess}
         />
       );
     });
