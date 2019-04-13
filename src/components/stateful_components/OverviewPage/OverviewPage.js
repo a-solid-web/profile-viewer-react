@@ -209,18 +209,16 @@ class OverviewPage extends React.Component {
           )
         ];
 
-        console.log(newACLTriples)
-
-        // accessUpdater.put(
-        //   rdf.sym(aclFile),
-        //   newACLTriples,
-        //   "text/turtle",
-        //   (uri, ok, message) => {
-        //     console.log(
-        //       "New Acl file has been created. New triples have already been added."
-        //     );
-        //   }
-        // );
+        accessUpdater.put(
+          rdf.sym(aclFile),
+          newACLTriples,
+          "text/turtle",
+          (uri, ok, message) => {
+            console.log(
+              "New Acl file has been created. New triples have already been added."
+            );
+          }
+        );
       });
   }
 
