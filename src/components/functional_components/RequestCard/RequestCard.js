@@ -5,11 +5,14 @@ import { Button } from "yoda-design-system";
 class RequestCard extends React.Component {
   render() {
     const request = this.props.request;
-    const author = request[0]
-    const avatar = request[2]
-    const permissions = request[3]
+    const author = request[0];
+    const sender = request[1];
+    const avatar = request[2];
+    const permissions = request[3];
+    const requestedRessource = request[4];
+
     return (
-      <div className="requestcard" key={this.props.index}>
+      <div className="requestcard">
         <div className="requestcard-header">
           <img
             className="requestcard-header-avatar"
@@ -26,13 +29,18 @@ class RequestCard extends React.Component {
                 <Button
                   className="requestcard-request-button"
                   variant="outlined"
-                  onClick={props.onClick}
+                  sender={sender}
+                  id={requestedRessource}
+                  onClick={this.props.onAccept}
                 >
                   Accept
                 </Button>
                 <Button
                   className="requestcard-request-button"
                   variant="outlined"
+                  sender={sender}
+                  id={requestedRessource}
+                  onClick={this.props.onDeny}
                 >
                   Deny
                 </Button>

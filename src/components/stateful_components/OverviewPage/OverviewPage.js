@@ -8,7 +8,10 @@ const LDP = rdf.Namespace("http://www.w3.org/ns/ldp#");
 const ACT = rdf.Namespace("https://www.w3.org/ns/activitystreams#");
 const FOAF = rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const VCARD = rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
-const PREQ = rdf.Namespace("https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf#");
+const ACL = new rdf.Namespace("http://www.w3.org/ns/auth/acl#");
+const PREQ = rdf.Namespace(
+  "https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf#"
+);
 
 class OverviewPage extends React.Component {
   constructor(props) {
@@ -39,12 +42,11 @@ class OverviewPage extends React.Component {
         LDP("contains")
       );
 
-      notificationAddresses.forEach(
-        (notificationAddress) => {
-          const notificationAddressValue = inboxAddress + "/" + notificationAddress.value.split("/")[3]
-          this.fetchNotification(notificationAddressValue);
-        }
-      );
+      notificationAddresses.forEach(notificationAddress => {
+        const notificationAddressValue =
+          inboxAddress + "/" + notificationAddress.value.split("/")[3];
+        this.fetchNotification(notificationAddressValue);
+      });
     });
   }
 
@@ -58,23 +60,26 @@ class OverviewPage extends React.Component {
         PREQ("requestFrom")
       );
 
-      if (!sender){
+      if (!sender) {
         return;
       }
 
       const requestType = notificationStore.any(
         rdf.sym(notificationAddress),
         PREQ("requestDataType")
-      )
-      const requestTypeValue = requestType.value.split("#")[1]
+      );
+      const requestTypeValue = requestType.value.split("#")[1];
 
-      const requestedRessource = notificationStore.any(rdf.sym(notificationAddress), PREQ("requests"))
-      const requestedRessourceValue = requestedRessource.value
+      const requestedRessource = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("requests")
+      );
+      const requestedRessourceValue = requestedRessource.value;
 
       const senderStore = rdf.graph();
       const senderFetcher = new rdf.Fetcher(senderStore);
 
-      console.log(sender)
+      console.log(sender);
       senderFetcher.load(sender).then(response => {
         const picture = senderStore.any(rdf.sym(sender), VCARD("hasPhoto"));
         const name = senderStore.any(rdf.sym(sender), FOAF("name"));
@@ -85,18 +90,113 @@ class OverviewPage extends React.Component {
           picture.value,
           ["Access " + requestTypeValue + " (" + requestedRessourceValue + ")"],
           requestedRessourceValue
-        ])
+        ]);
       });
     });
   }
 
-  acceptRequest(e){
-    console.log(e.target.id)
+  acceptRequest(e) {
+    const file = e.target.id;
+    const sender = e.target.getAttribute("sender");
+    const aclFile = file + ".acl";
+    const ownerNode = aclFile + "#owner";
+    const viewerNode = aclFile + "#viewer";
+
+    const accessStore = rdf.graph();
+    const accessFetcher = new rdf.Fetcher(accessStore);
+    const accessUpdater = new rdf.UpdateManager(accessStore);
+
+    accessFetcher
+      .load(aclFile)
+      .then(response => {
+        const del = [];
+        const ins = [
+          rdf.st(
+            rdf.sym(
+              viewerNode,
+              ACL("agent"),
+              rdf.sym(sender),
+              rdf.sym(viewerNode).doc()
+            )
+          )
+        ];
+
+        accessUpdater.put(del, ins, (uri, ok, message) => {
+          console.log("New triples have been added.");
+        });
+      })
+      .catch(err => {
+        const newACLTriples = [
+          rdf.st(
+            rdf.sym(ownerNode),
+            ACL("agent"),
+            rdf.sym(this.state.webId),
+            rdf.sym(ownerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(ownerNode),
+            ACL("accessTo"),
+            rdf.sym(file),
+            rdf.sym(ownerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(ownerNode),
+            ACL("mode"),
+            ACL("Control"),
+            rdf.sym(ownerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(ownerNode),
+            ACL("mode"),
+            ACL("Read"),
+            rdf.sym(ownerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(ownerNode),
+            ACL("mode"),
+            ACL("Write"),
+            rdf.sym(ownerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(viewerNode),
+            ACL("agent"),
+            rdf.sym(sender),
+            rdf.sym(viewerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(viewerNode),
+            ACL("accessTo"),
+            rdf.sym(file),
+            rdf.sym(viewerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(viewerNode),
+            ACL("mode"),
+            ACL("Read"),
+            rdf.sym(viewerNode).doc()
+          )
+        ];
+
+        accessUpdater.put(
+          rdf.sym(aclFile),
+          newACLTriples,
+          "text/turtle",
+          (uri, ok, message) => {
+            console.log(
+              "New Acl file has been created. New triples have already been added."
+            );
+          }
+        );
+      });
   }
 
-  addNotification(name, sender, picture, requestType){
-    const requests = this.state.requests
-    requests.push()
+  denyRequest(e) {
+    const file = e.target.id;
+  }
+
+  addNotification(name, sender, picture, requestType) {
+    const requests = this.state.requests;
+    requests.push();
     return;
   }
 
@@ -104,7 +204,6 @@ class OverviewPage extends React.Component {
     const requests = this.state.requests.slice();
     requests.push(newRequest);
     this.setState({ requests: requests });
-    console.log(this.state.requests)
   }
 
   removeRequest(input) {
@@ -133,9 +232,11 @@ class OverviewPage extends React.Component {
       return requests.map((item, i) => {
         return (
           <RequestCard
-            index={i}
+            key={i}
             avatar={"https://via.placeholder.com/40?text=profile+picture"}
             request={item}
+            onAccept={this.acceptRequest.bind(this)}
+            onDeny={this.denyRequest.bind(this)}
           />
         );
       });
