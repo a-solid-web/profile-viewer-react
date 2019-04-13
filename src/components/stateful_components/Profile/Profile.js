@@ -147,7 +147,7 @@ class Profile extends React.Component {
             PREQ("requestedFrom"),
             rdf.sym(webId),
             rdf.sym(inboxAddress).doc()
-          ),
+          )
           // rdf.st(
           //   rdf.sym(inboxAddress),
           //   PREQ("requestedDataType"),
@@ -161,36 +161,38 @@ class Profile extends React.Component {
           //   rdf.sym(inboxAddress).doc()
           // )
         ];
-        updater.put(
-          rdf.sym(inboxAddress),
-          newTurtleFile,
-          "text/turtle",
-          function(uri, ok, message) {
-            if (ok) console.log("New turtle has been created");
-            else console.log(message);
-          }
-        );
-        let createTurtle =
-          '@prefix : <#>.
-          @prefix inbox: <./>.
-          @prefix n0: <http://purl.org/dc/elements/1.1/>.
-          @prefix XML: <http://www.w3.org/2001/XMLSchema#>.
-          @prefix flow: <http://www.w3.org/2005/01/wf/flow#>.
-          @prefix n: <http://rdfs.org/sioc/ns#>.
-          @prefix n1: <http://xmlns.com/foaf/0.1/>.
-          @prefix c: </profile/card#>.
-          @prefix PREQ: <https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf/> .
-          inbox:requests
-            a PREQ:DataRequest;
-            PREQ:requestFrom <https://malte18.solid.community/profile/card#me /> .
-            PREQ:requestDataType PREQ:HealtData;'
+        // updater.put(
+        //   rdf.sym(inboxAddress),
+        //   newTurtleFile,
+        //   "text/turtle",
+        //   function(uri, ok, message) {
+        //     if (ok) console.log("New turtle has been created");
+        //     else console.log(message);
+        //   }
+        // );
+        let createTurtle = `@prefix : <#>.
+@prefix inbox: <./>.
+@prefix n0: <http://purl.org/dc/elements/1.1/>.
+@prefix XML: <http://www.w3.org/2001/XMLSchema#>.
+@prefix flow: <http://www.w3.org/2005/01/wf/flow#>.
+@prefix n: <http://rdfs.org/sioc/ns#>.
+@prefix n1: <http://xmlns.com/foaf/0.1/>.
+@prefix c: </profile/card#>.
+@prefix PREQ: <https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf/> .
+
+inbox:requests
+  a PREQ:DataRequest;
+  PREQ:requestDataType PREQ:HealthData;
+  PREQ:requestFrom <https://malte18.solid.community/profile/card  #me> .
+  `;
+
         //When deleting use DELETE instead of INSERT
         const options = {
           noMeta: true,
           contentType: "text/turtle",
           body: createTurtle
         };
-        fetcher.webOperation("POST", inboxAddress, options)
+        fetcher.webOperation("POST", inboxAddress, options);
       }
     });
   };
