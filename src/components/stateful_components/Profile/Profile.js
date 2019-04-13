@@ -15,6 +15,8 @@ import JobSlot from "../../functional_components/JobSlot";
 const FOAF = new rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const VCARD = new rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
 const RDF = new rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+const PREQ = new rdf.Namespace("https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf/");
+
 
 class Profile extends React.Component {
   constructor(props) {
@@ -46,19 +48,11 @@ class Profile extends React.Component {
         console.log("You are not logged in");
       } else {
         const webId = session.webId;
-<<<<<<< HEAD
-        const privateCard = webId.replace("profile/card#me", "private/card")
-
-        const store = rdf.graph();
-        const fetcher = new rdf.Fetcher(store);
-        const updater = new rdf.UpdateManager(store); 
-=======
-        const privateCard = webId.replace("profile", "private")
+        const privateCard = webId.replace("profile", "private");
 
         const store = rdf.graph();
         const fetcher = new rdf.Fetcher(store);
         const updater = new rdf.UpdateManager(store);
->>>>>>> 2f27992bd565f3c3cfecef1e2f85efd4310ee996
 
         fetcher.load(webId).then(() => {
           const names = store.each(rdf.sym(webId), FOAF("name")).map(name => {
@@ -128,18 +122,58 @@ class Profile extends React.Component {
           });
         });
 
-        fetcher.load(privateCard).then(() => {
-          console.log("privateCard exists")
-        }).catch((err) => {
-          let newPrivateProfile;
-          newPrivateProfile = [
-            rdf.st(rdf.sym(privateCard), RDF("type"), FOAF("Person"))
-          ]
-          updater.put(rdf.sym(privateCard), newPrivateProfile, "text/turtle", function(uri, ok, message) {
-            if(ok) console.log("New Private Card has been created");
-            else console.log(message);
-          })  
-        })
+        fetcher
+          .load(privateCard)
+          .then(() => {
+            console.log("privateCard exists");
+          })
+          .catch(err => {
+            let newPrivateProfile;
+            newPrivateProfile = [
+              rdf.st(rdf.sym(privateCard), RDF("type"), FOAF("Person"))
+            ];
+            updater.put(
+              rdf.sym(privateCard),
+              newPrivateProfile,
+              "text/turtle",
+              function(uri, ok, message) {
+                if (ok) console.log("New Private Card has been created");
+                else console.log(message);
+              }
+            );
+          });
+          
+      
+          let ins = rdf.st(
+            rdf.sym(webId), 
+          PREQ("requestFrom"), 
+          rdf.sym(webId), 
+          rdf.sym(webId).doc());
+      
+          let del = []; 
+      
+          updater.update(del, ins,(uri, ok, message) => {
+            if(ok) {
+              console.log("tested ontology")
+            } else alert(message); 
+            console.log(message); 
+          })
+
+          //   let  = rdf.st(
+          //   rdf.sym(webId), 
+          // FOAF("Name"), 
+          // rdf.lit("malte"), 
+          // rdf.sym(webId).doc());
+      
+          // let ins = []; 
+      
+          // updater.update(del, ins,(uri, ok, message) => {
+          //   if(ok) {
+          //     console.log("tested ontology")
+          //   } else alert(message); 
+          //   console.log(message); 
+          // })
+        
       }
     });
   };
@@ -192,6 +226,8 @@ class Profile extends React.Component {
     };
     reader.readAsArrayBuffer(filePath);
   };
+
+
 
   applyNameChanges(e) {
     const oldName = e.target.placeholder;
@@ -456,8 +492,8 @@ class Profile extends React.Component {
       updater.update(del, ins, (uri, ok, message) => {
         if (ok) console.log("Made public");
         else alert(message);
-      })
-    } else if (access === "private"){
+      });
+    } else if (access === "private") {
       const del = [
         rdf.st(
           rdf.sym(telephoneDoc),
@@ -481,11 +517,11 @@ class Profile extends React.Component {
           rdf.sym(telephoneDoc).doc()
         )
       ];
-      
+
       updater.update(del, ins, (uri, ok, message) => {
         if (ok) console.log("Made public");
         else alert(message);
-      })
+      });
     }
   }
 
