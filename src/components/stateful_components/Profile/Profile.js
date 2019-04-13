@@ -38,7 +38,8 @@ class Profile extends React.Component {
       editTelephone: false,
       newJob: "",
       editJob: false,
-      toggleAccess: "",
+      accessView: "",
+      accessIndex: ""
     };
   }
 
@@ -124,8 +125,82 @@ class Profile extends React.Component {
 
         fetcher
           .load(privateCard)
-          .then(() => {
-            console.log("privateCard exists");
+          .then((response) => {
+            const names = store.each(rdf.sym(privateCard), FOAF("name")).map(name => {
+              return [name.value, "private"];
+            });
+
+            const mergedNames = this.state.name.concat(names)
+  
+            const jobs = store.each(rdf.sym(privateCard), VCARD("role")).map(job => {
+              return [job.value, "private"];
+            });
+
+            const mergedJobs = this.state.job.concat(jobs)
+  
+            const bios = store.each(rdf.sym(privateCard), VCARD("note")).map(bio => {
+              return [bio.value, "private"];
+            });
+
+            const mergedBios = this.state.bio.concat(bios)
+  
+            const emails = store
+              .each(rdf.sym(privateCard), VCARD("hasEmail"))
+              .map(emailBlankId => {
+                const email = store.any(rdf.sym(emailBlankId), VCARD("value"));
+                const emailValue = email.value;
+  
+                const emailType = store.any(rdf.sym(emailBlankId), RDF("type"));
+                const emailTypeValue = emailType
+                  ? emailType.value.split("#")[1] + "-Email"
+                  : "Email";
+  
+                return [emailValue, emailBlankId.value, emailTypeValue, "private"];
+              });
+
+            const mergedEmails = this.state.emails.concat(emails)
+            
+            console.log(privateCard)
+            const telephones = store
+              .each(rdf.sym(privateCard), VCARD("hasTelephone"))
+              .map(telephoneBlankId => {
+                console.log(telephoneBlankId)
+                const telephone = store.any(
+                  rdf.sym(telephoneBlankId),
+                  VCARD("value")
+                );
+                const telephoneValue = telephone.value;
+                console.log(telephoneValue)
+  
+                const telephoneType = store.any(
+                  rdf.sym(telephoneBlankId),
+                  RDF("type")
+                );
+
+                const telephoneTypeValue = telephoneType
+                  ? telephoneType.value.split("#")[1] + "-Phone"
+                  : "Phone";
+  
+                return [
+                  telephoneValue,
+                  telephoneBlankId,
+                  telephoneTypeValue,
+                  "private"
+                ];
+              });
+            
+            const mergedTelephones = this.state.telephones.concat(telephones)
+  
+            this.setState({
+              webId: webId,
+              name: mergedNames,
+              emails: mergedEmails,
+              job: mergedJobs,
+              bio: mergedBios,
+              telephones: mergedTelephones,
+              newName: names[0],
+              editMode: false
+            });
           })
           .catch(err => {
             let newPrivateProfile;
@@ -419,104 +494,27 @@ class Profile extends React.Component {
     this.setState({ editTelephone: !this.state.editTelephone });
   }
 
-  toggleTelephoneAccess(e) {
-    const telephoneBlankId = e.target.id.split("?")[0];
-    const telephoneValue = e.target.id.split("?")[1];
-    const telephoneDoc = telephoneBlankId.split("#")[0];
-    const telephonePrivateDoc = telephoneDoc.replace("profile", "private")
-
-    const store = rdf.graph();
-    const updater = new rdf.UpdateManager(store);
-
-    const access = e.target.innerHTML;
-
-    if (access === "Private") {
-      const delPublic = [
-        rdf.st(
-          rdf.sym(telephoneBlankId),
-          VCARD("value"),
-          rdf.sym(telephoneValue),
-          rdf.sym(telephoneDoc).doc()
-        )
-      ];
-
-      const insPublic = [
-        rdf.st(
-          rdf.sym(telephoneBlankId),
-          VCARD("value"),
-          rdf.lit("Request Access"),
-          rdf.sym(telephoneDoc).doc()
-        )
-      ];
-
-      updater.update(delPublic, insPublic, (uri, ok, message) => {
-        if (ok) console.log("Made public");
-        else alert(message);
-      });
-
-      const delPrivate = [];
-
-      const insPrivate = [
-        rdf.st(
-          rdf.sym(telephoneBlankId),
-          VCARD("value"),
-          rdf.sym(telephoneValue),
-          rdf.sym(telephonePrivateDoc).doc()
-        )
-      ];
-
-      updater.update(delPrivate, insPrivate, (uri, ok, message) => {
-        if (ok) console.log("Made public");
-        else alert(message);
-      });
-    } else if (access === "Public") {
-      const delPublic = [
-        rdf.st(
-          rdf.sym(telephoneBlankId),
-          VCARD("value"),
-          rdf.lit("Request Access"),
-          rdf.sym(telephoneDoc).doc()
-        )
-      ];
-
-      const insPublic = [
-        rdf.st(
-          rdf.sym(telephoneBlankId),
-          VCARD("value"),
-          rdf.sym(telephoneValue),
-          rdf.sym(telephoneDoc).doc()
-        )
-      ];
-
-      updater.update(delPublic, insPublic, (uri, ok, message) => {
-        if (ok) console.log("Made public");
-        else alert(message);
-      });
-
-      const delPrivate = [
-        rdf.st(
-          rdf.sym(telephoneBlankId),
-          VCARD("value"),
-          rdf.sym(telephoneValue),
-          rdf.sym(telephonePrivateDoc).doc()
-        )
-      ];
-
-      const insPrivate = [];
-
-      updater.update(delPrivate, insPrivate, (uri, ok, message) => {
-        if (ok) console.log("Made public");
-        else alert(message);
-      });
-    }
-  }
-
-  toggleAccessView(e){
-   console.log(e.target)
-  }
-
   componentDidMount() {
     this.fetchUser();
+  }
+
+  changeAccessView(e){
+    this.setState({
+      accessView: e.target.id,
+      accessIndex: e.target.attributes[1].value
+    })
+  }
+
+  createAccessView(){
+    switch (this.state.accessView) {
+      case "telephone":
+        const telephone = this.state.telephones[this.state.accessIndex]
+        return (
+          <AccessControl accessView={this.state.accessView} telephone={telephone}/>
+        );
+      default:
+        return "";
+    }
   }
 
   render() {
@@ -573,52 +571,57 @@ class Profile extends React.Component {
     });
 
     let telephoneSlotsMarkup = this.state.telephones.map((telephone, index) => {
+      console.log(telephone)
+      if (telephone[0] === "Request Access"){
+        return "";
+      }
       return (
         <TelephoneSlot
           key={index}
+          index={index}
           telephone={telephone}
           editMode={this.state.editTelephone}
           onChange={this.getNewTelephone.bind(this)}
           onClick={this.toggleEditTelephone.bind(this)}
           onBlur={this.applyTelephoneChanges.bind(this)}
-          onToggleAccess={this.toggleTelephoneAccess}
+          onToggleAccess={this.changeAccessView.bind(this)}
         />
       );
     });
 
+    let accessViewMarkup = this.createAccessView();
+
     return (
       <Container>
-      <Row>
-        <Col lg="6">
-        {this.props.webId ? (
-          <div>
-            <Row>
-              <Col>
-                <ProfilePicture
-                  picture={this.state.picture}
-                  onChange={this.setProfilePicture}
-                />
-              </Col>
-              <Col>
-                {nameSlotMarkup}
-                {jobSlotMarkup}
-                {bioSlotMarkup}
-                {emailSlotsMarkup}
-                {telephoneSlotsMarkup}
-              </Col>
-            </Row>
-            <Row>
-              <Button onClick={this.props.logout}>Logout</Button>
-            </Row>
-          </div>
-        ) : (
-          <p>You are not logged in...</p>
-        )}
-        </Col>
-        <Col lg="3">
-          <AccessControl/>
-        </Col>
-      </Row>
+        <Row>
+          <Col lg="6">
+            {this.props.webId ? (
+              <div>
+                <Row>
+                  <Col>
+                    <ProfilePicture
+                      picture={this.state.picture}
+                      onChange={this.setProfilePicture}
+                    />
+                  </Col>
+                  <Col>
+                    {nameSlotMarkup}
+                    {jobSlotMarkup}
+                    {bioSlotMarkup}
+                    {emailSlotsMarkup}
+                    {telephoneSlotsMarkup}
+                  </Col>
+                </Row>
+                <Row>
+                  <Button onClick={this.props.logout}>Logout</Button>
+                </Row>
+              </div>
+            ) : (
+              <p>You are not logged in...</p>
+            )}
+          </Col>
+          <Col lg="3">{accessViewMarkup}</Col>
+        </Row>
       </Container>
     );
   }
