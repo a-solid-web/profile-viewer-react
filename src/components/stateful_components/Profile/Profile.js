@@ -510,7 +510,7 @@ class Profile extends React.Component {
       case "telephone":
         const telephone = this.state.telephones[this.state.accessIndex]
         return (
-          <AccessControl accessView={this.state.accessView} telephone={telephone}/>
+          <AccessControl accessView={this.state.accessView} telephone={telephone} onComplete={this.fetchUser.bind(this)}/>
         );
       default:
         return "";
@@ -571,7 +571,6 @@ class Profile extends React.Component {
     });
 
     let telephoneSlotsMarkup = this.state.telephones.map((telephone, index) => {
-      console.log(telephone)
       if (telephone[0] === "Request Access"){
         return "";
       }

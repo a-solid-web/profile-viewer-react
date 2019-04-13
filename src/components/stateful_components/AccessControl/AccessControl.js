@@ -18,7 +18,10 @@ class AccessControl extends React.Component {
 
   toggleTelephoneAccess(e) {
     const telephoneBlankId = e.target.id.split("?")[0];
-    const telephonePrivateBlankId = telephoneBlankId.replace("profile", "private");
+    const telephonePrivateBlankId = telephoneBlankId.replace(
+      "profile",
+      "private"
+    );
     const telephoneValue = e.target.id.split("?")[1];
 
     const telephoneDoc = telephoneBlankId.split("#")[0];
@@ -57,10 +60,10 @@ class AccessControl extends React.Component {
 
       const insPrivate = [
         rdf.st(
-            rdf.sym(telephonePrivateDoc + "#me"),
-            VCARD("hasTelephone"),
-            rdf.sym(telephonePrivateBlankId),
-            rdf.sym(telephonePrivateDoc).doc()
+          rdf.sym(telephonePrivateDoc + "#me"),
+          VCARD("hasTelephone"),
+          rdf.sym(telephonePrivateBlankId),
+          rdf.sym(telephonePrivateDoc).doc()
         ),
         rdf.st(
           rdf.sym(telephonePrivateBlankId),
@@ -118,9 +121,15 @@ class AccessControl extends React.Component {
 
   toggleBlankIdAccess(e) {
     const blankId = e.target.id.split("?")[0];
-    const blankIdFolder = blankId.split("/")[3]
-    const privateBlankId = blankIdFolder === "profile" ? blankId.replace("profile", "private") : blankId;
-    const publicBlankId = blankIdFolder === "profile" ? blankId : blankId.replace("private", "profile");
+    const blankIdFolder = blankId.split("/")[3];
+    const privateBlankId =
+      blankIdFolder === "profile"
+        ? blankId.replace("profile", "private")
+        : blankId;
+    const publicBlankId =
+      blankIdFolder === "profile"
+        ? blankId
+        : blankId.replace("private", "profile");
     const value = e.target.id.split("?")[1];
 
     const doc = blankId.split("#")[0];
@@ -159,10 +168,10 @@ class AccessControl extends React.Component {
 
       const insPrivate = [
         rdf.st(
-            rdf.sym(privateDoc + "#me"),
-            VCARD("hasTelephone"),
-            rdf.sym(privateBlankId),
-            rdf.sym(privateDoc).doc()
+          rdf.sym(privateDoc + "#me"),
+          VCARD("hasTelephone"),
+          rdf.sym(privateBlankId),
+          rdf.sym(privateDoc).doc()
         ),
         rdf.st(
           rdf.sym(privateBlankId),
@@ -173,7 +182,7 @@ class AccessControl extends React.Component {
       ];
 
       updater.update(delPrivate, insPrivate, (uri, ok, message) => {
-        if (ok) console.log("Made public");
+        if (ok) console.log("Made private");
         else alert(message);
       });
     } else if (access === "Public") {
@@ -226,40 +235,45 @@ class AccessControl extends React.Component {
     });
   }
 
-  getTelephoneMarkup() {
-    if (this.state.accessView === "telephone") {
-      const access = this.props.telephone[3];
-      const dropDownMarkup =
-        access === "public" ? (
-          <div>
-            <Dropdown.Item disabled>Public</Dropdown.Item>
-            <Dropdown.Item
-              id={this.props.telephone[1].value + "?" + this.props.telephone[0]}
-              onClick={this.toggleBlankIdAccess}
-            >
-              Private
-            </Dropdown.Item>
-          </div>
-        ) : (
-          <div>
-            <Dropdown.Item
-              id={this.props.telephone[1].value + "?" + this.props.telephone[0]}
-              onClick={this.toggleBlankIdAccess}
-            >
-              Public
-            </Dropdown.Item>
-            <Dropdown.Item disabled>Private</Dropdown.Item>
-          </div>
-        );
-      return dropDownMarkup;
+  getDropDownMarkup() {
+    switch (this.state.accessView) {
+      case "telephone":
+        const access = this.props.telephone[3];
+        const dropDownMarkup =
+          access === "public" ? (
+            <div>
+              <Dropdown.Item disabled>Public</Dropdown.Item>
+              <Dropdown.Item
+                id={
+                  this.props.telephone[1].value + "?" + this.props.telephone[0]
+                }
+                onClick={this.toggleBlankIdAccess}
+              >
+                Private
+              </Dropdown.Item>
+            </div>
+          ) : (
+            <div>
+              <Dropdown.Item
+                id={
+                  this.props.telephone[1].value + "?" + this.props.telephone[0]
+                }
+                onClick={this.toggleBlankIdAccess}
+              >
+                Public
+              </Dropdown.Item>
+              <Dropdown.Item disabled>Private</Dropdown.Item>
+            </div>
+          );
+        return dropDownMarkup;
     }
   }
 
   render() {
-    const dropDownMarkup = this.getTelephoneMarkup();
+    const dropDownMarkup = this.getDropDownMarkup();
 
     return (
-      <Row>
+      <Row onLoad={this.props.onComplete}>
         <Col lg="1" />
         <Col lg="10">
           <Dropdown size="sm">
