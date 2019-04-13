@@ -2,12 +2,10 @@ import React from "react";
 import FormControl from "react-bootstrap/FormControl";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Typography } from "yoda-design-system";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Typography, Button } from "yoda-design-system";
 
 const NameSlot = props => {
-  const name = props.name[0]
-  const access = props.name[1]
+  const name = props.name[0];
 
   let nameDisplay = props.editMode ? (
     <FormControl
@@ -20,18 +18,6 @@ const NameSlot = props => {
     <p onClick={props.onClick}>{name}</p>
   );
 
-  const dropDownMarkup = (access === "public") ? (
-    <div>
-      <Dropdown.Item disabled>Public</Dropdown.Item>
-      <Dropdown.Item>Private</Dropdown.Item>
-    </div>
-  ) : (
-    <div>
-      <Dropdown.Item>Public</Dropdown.Item>
-      <Dropdown.Item disabled>Private</Dropdown.Item>
-    </div>
-  )
-
   return (
     <Row>
       <Col lg="3">
@@ -41,12 +27,9 @@ const NameSlot = props => {
         <Row>{nameDisplay}</Row>
       </Col>
       <Col lg="3">
-        <Dropdown size="sm">
-          <Dropdown.Toggle variant="secondary">Access</Dropdown.Toggle>
-          <Dropdown.Menu>
-            {dropDownMarkup}
-          </Dropdown.Menu>
-        </Dropdown>
+        <Button onClick={props.onToggleAccess} id="name" index={props.index}>
+          Change Access
+        </Button>
       </Col>
     </Row>
   );

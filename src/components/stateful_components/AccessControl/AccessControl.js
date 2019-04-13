@@ -263,6 +263,11 @@ class AccessControl extends React.Component {
         id = this.props.job[0];
         type = "job";
         break;
+      case "name":
+        access = this.props.name[1];
+        id = this.props.name[0];
+        type = "name";
+        break;
       default:
         return "";
     }

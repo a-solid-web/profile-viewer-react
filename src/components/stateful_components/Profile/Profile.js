@@ -535,6 +535,9 @@ class Profile extends React.Component {
       case "job":
         const job = this.state.job[this.state.accessIndex];
         return <AccessControl accessView={this.state.accessView} job={job} />;
+      case "name":
+        const name = this.state.name[this.state.accessIndex];
+        return <AccessControl accessView={this.state.accessView} name={name} />;
       default:
         return "";
     }
@@ -549,10 +552,12 @@ class Profile extends React.Component {
         <NameSlot
           name={name}
           key={index}
+          index={index}
           editMode={this.state.editName}
           onBlur={this.applyNameChanges.bind(this)}
           onChange={this.getNewName.bind(this)}
           onClick={this.toggleEditName.bind(this)}
+          onToggleAccess={this.changeAccessView.bind(this)}
         />
       );
     });
