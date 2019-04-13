@@ -132,6 +132,11 @@ class AccessControl extends React.Component {
         : blankId.replace("private", "profile");
     const value = e.target.id.split("?")[1];
 
+    const predicate =
+      e.target.getAttribute("type") === "email"
+        ? VCARD("hasEmail")
+        : VCARD("hasTelephone");
+
     const doc = blankId.split("#")[0];
     const privateDoc = doc.replace("profile", "private");
 
@@ -169,7 +174,7 @@ class AccessControl extends React.Component {
       const insPrivate = [
         rdf.st(
           rdf.sym(privateDoc + "#me"),
-          VCARD("hasTelephone"),
+          predicate,
           rdf.sym(privateBlankId),
           rdf.sym(privateDoc).doc()
         ),
@@ -215,6 +220,12 @@ class AccessControl extends React.Component {
           VCARD("value"),
           rdf.sym(value),
           rdf.sym(privateBlankId).doc()
+        ),
+        rdf.st(
+          rdf.sym(privateDoc + "#me"),
+          predicate,
+          rdf.sym(privateBlankId),
+          rdf.sym(privateDoc).doc()
         )
       ];
 
@@ -236,37 +247,41 @@ class AccessControl extends React.Component {
   }
 
   getDropDownMarkup() {
+    var access;
+    var id;
+    var type;
     switch (this.state.accessView) {
       case "telephone":
-        const access = this.props.telephone[3];
-        const dropDownMarkup =
-          access === "public" ? (
-            <div>
-              <Dropdown.Item disabled>Public</Dropdown.Item>
-              <Dropdown.Item
-                id={
-                  this.props.telephone[1].value + "?" + this.props.telephone[0]
-                }
-                onClick={this.toggleBlankIdAccess}
-              >
-                Private
-              </Dropdown.Item>
-            </div>
-          ) : (
-            <div>
-              <Dropdown.Item
-                id={
-                  this.props.telephone[1].value + "?" + this.props.telephone[0]
-                }
-                onClick={this.toggleBlankIdAccess}
-              >
-                Public
-              </Dropdown.Item>
-              <Dropdown.Item disabled>Private</Dropdown.Item>
-            </div>
-          );
-        return dropDownMarkup;
+        access = this.props.telephone[3];
+        id = this.props.telephone[1].value + "?" + this.props.telephone[0];
+        type = "telephone";
+        break;
+      case "email":
+        access = this.props.email[3];
+        id = this.props.email[1] + "?" + this.props.email[0];
+        type = "email";
+        break;
+      default:
+        return "";
     }
+
+    const dropDownMarkup =
+      access === "public" ? (
+        <div>
+          <Dropdown.Item disabled>Public</Dropdown.Item>
+          <Dropdown.Item id={id} onClick={this.toggleBlankIdAccess} type={type}>
+            Private
+          </Dropdown.Item>
+        </div>
+      ) : (
+        <div>
+          <Dropdown.Item id={id} onClick={this.toggleBlankIdAccess} type={type}>
+            Public
+          </Dropdown.Item>
+          <Dropdown.Item disabled>Private</Dropdown.Item>
+        </div>
+      );
+    return dropDownMarkup;
   }
 
   render() {

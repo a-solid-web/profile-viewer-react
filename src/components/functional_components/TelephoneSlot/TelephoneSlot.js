@@ -28,9 +28,15 @@ const TelephoneSlot = props => {
       <Col md="6">
         <Row>{telephoneDisplay}</Row>
       </Col>
-      <Button onClick={props.onToggleAccess} id="telephone" index={props.index}>
-        Change Access
-      </Button>
+      <Col md="3">
+        <Button
+          onClick={props.onToggleAccess}
+          id="telephone"
+          index={props.index}
+        >
+          Change Access
+        </Button>
+      </Col>
     </Row>
   );
 };

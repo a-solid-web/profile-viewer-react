@@ -2,7 +2,6 @@ import React from "react";
 import rdf from "rdflib";
 import auth from "solid-auth-client";
 import { Button } from "yoda-design-system";
-import Container from "react-bootstrap/Container";
 import ProfilePicture from "../../functional_components/ProfilePicture";
 import NameSlot from "../../functional_components/NameSlot";
 import BioSlot from "../../functional_components/BioSlot";
@@ -125,42 +124,53 @@ class Profile extends React.Component {
 
         fetcher
           .load(privateCard)
-          .then((response) => {
-            const names = store.each(rdf.sym(privateCard), FOAF("name")).map(name => {
-              return [name.value, "private"];
-            });
+          .then(response => {
+            const names = store
+              .each(rdf.sym(privateCard), FOAF("name"))
+              .map(name => {
+                return [name.value, "private"];
+              });
 
-            const mergedNames = this.state.name.concat(names)
-  
-            const jobs = store.each(rdf.sym(privateCard), VCARD("role")).map(job => {
-              return [job.value, "private"];
-            });
+            const mergedNames = this.state.name.concat(names);
 
-            const mergedJobs = this.state.job.concat(jobs)
-  
-            const bios = store.each(rdf.sym(privateCard), VCARD("note")).map(bio => {
-              return [bio.value, "private"];
-            });
+            const jobs = store
+              .each(rdf.sym(privateCard), VCARD("role"))
+              .map(job => {
+                return [job.value, "private"];
+              });
 
-            const mergedBios = this.state.bio.concat(bios)
-  
+            const mergedJobs = this.state.job.concat(jobs);
+
+            const bios = store
+              .each(rdf.sym(privateCard), VCARD("note"))
+              .map(bio => {
+                return [bio.value, "private"];
+              });
+
+            const mergedBios = this.state.bio.concat(bios);
+
             const emails = store
               .each(rdf.sym(privateCard), VCARD("hasEmail"))
               .map(emailBlankId => {
                 const email = store.any(rdf.sym(emailBlankId), VCARD("value"));
                 const emailValue = email.value;
-  
+
                 const emailType = store.any(rdf.sym(emailBlankId), RDF("type"));
                 const emailTypeValue = emailType
                   ? emailType.value.split("#")[1] + "-Email"
                   : "Email";
-  
-                return [emailValue, emailBlankId.value, emailTypeValue, "private"];
+
+                return [
+                  emailValue,
+                  emailBlankId.value,
+                  emailTypeValue,
+                  "private"
+                ];
               });
 
-            const mergedEmails = this.state.emails.concat(emails)
-            
-            console.log(privateCard)
+            const mergedEmails = this.state.emails.concat(emails);
+
+            console.log(privateCard);
             const telephones = store
               .each(rdf.sym(privateCard), VCARD("hasTelephone"))
               .map(telephoneBlankId => {
@@ -169,8 +179,8 @@ class Profile extends React.Component {
                   VCARD("value")
                 );
                 const telephoneValue = telephone.value;
-                console.log(telephoneValue)
-  
+                console.log(telephoneValue);
+
                 const telephoneType = store.any(
                   rdf.sym(telephoneBlankId),
                   RDF("type")
@@ -179,7 +189,7 @@ class Profile extends React.Component {
                 const telephoneTypeValue = telephoneType
                   ? telephoneType.value.split("#")[1] + "-Phone"
                   : "Phone";
-  
+
                 return [
                   telephoneValue,
                   telephoneBlankId,
@@ -187,10 +197,9 @@ class Profile extends React.Component {
                   "private"
                 ];
               });
-            
-            const mergedTelephones = this.state.telephones.concat(telephones)
-            console.log(mergedTelephones)
-  
+
+            const mergedTelephones = this.state.telephones.concat(telephones);
+
             this.setState({
               webId: webId,
               name: mergedNames,
@@ -498,19 +507,27 @@ class Profile extends React.Component {
     this.fetchUser();
   }
 
-  changeAccessView(e){
+  changeAccessView(e) {
     this.setState({
       accessView: e.target.id,
       accessIndex: e.target.attributes[1].value
-    })
+    });
   }
 
-  createAccessView(){
+  createAccessView() {
     switch (this.state.accessView) {
       case "telephone":
-        const telephone = this.state.telephones[this.state.accessIndex]
+        const telephone = this.state.telephones[this.state.accessIndex];
         return (
-          <AccessControl accessView={this.state.accessView} telephone={telephone} onComplete={this.fetchUser.bind(this)}/>
+          <AccessControl
+            accessView={this.state.accessView}
+            telephone={telephone}
+          />
+        );
+      case "email":
+        const email = this.state.emails[this.state.accessIndex];
+        return (
+          <AccessControl accessView={this.state.accessView} email={email} />
         );
       default:
         return "";
@@ -558,20 +575,25 @@ class Profile extends React.Component {
     });
 
     let emailSlotsMarkup = this.state.emails.map((email, index) => {
+      if (email[0] === "Request Access") {
+        return "";
+      }
       return (
         <EmailSlot
           key={index}
+          index={index}
           email={email}
           editMode={this.state.editEmail}
           onChange={this.getNewEmail.bind(this)}
           onClick={this.toggleEditEmail.bind(this)}
           onBlur={this.applyEmailChanges.bind(this)}
+          onToggleAccess={this.changeAccessView.bind(this)}
         />
       );
     });
 
     let telephoneSlotsMarkup = this.state.telephones.map((telephone, index) => {
-      if (telephone[0] === "Request Access"){
+      if (telephone[0] === "Request Access") {
         return "";
       }
       return (
@@ -591,37 +613,36 @@ class Profile extends React.Component {
     let accessViewMarkup = this.createAccessView();
 
     return (
-      <Container>
-        <Row>
-          <Col lg="6">
-            {this.props.webId ? (
-              <div>
-                <Row>
-                  <Col>
-                    <ProfilePicture
-                      picture={this.state.picture}
-                      onChange={this.setProfilePicture}
-                    />
-                  </Col>
-                  <Col>
-                    {nameSlotMarkup}
-                    {jobSlotMarkup}
-                    {bioSlotMarkup}
-                    {emailSlotsMarkup}
-                    {telephoneSlotsMarkup}
-                  </Col>
-                </Row>
-                <Row>
-                  <Button onClick={this.props.logout}>Logout</Button>
-                </Row>
-              </div>
-            ) : (
-              <p>You are not logged in...</p>
-            )}
-          </Col>
-          <Col lg="3">{accessViewMarkup}</Col>
-        </Row>
-      </Container>
+      <Row>
+        <Col lg="1" />
+        <Col lg="6">
+          {this.props.webId ? (
+            <div>
+              <Row>
+                <Col>
+                  <ProfilePicture
+                    picture={this.state.picture}
+                    onChange={this.setProfilePicture}
+                  />
+                </Col>
+                <Col>
+                  {nameSlotMarkup}
+                  {jobSlotMarkup}
+                  {bioSlotMarkup}
+                  {emailSlotsMarkup}
+                  {telephoneSlotsMarkup}
+                </Col>
+              </Row>
+              <Row>
+                <Button onClick={this.props.logout}>Logout</Button>
+              </Row>
+            </div>
+          ) : (
+            <p>You are not logged in...</p>
+          )}
+        </Col>
+        <Col lg="5">{accessViewMarkup}</Col>
+      </Row>
     );
   }
 }
