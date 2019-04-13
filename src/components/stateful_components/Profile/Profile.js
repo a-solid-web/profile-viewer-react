@@ -164,7 +164,6 @@ class Profile extends React.Component {
             const telephones = store
               .each(rdf.sym(privateCard), VCARD("hasTelephone"))
               .map(telephoneBlankId => {
-                console.log(telephoneBlankId)
                 const telephone = store.any(
                   rdf.sym(telephoneBlankId),
                   VCARD("value")
@@ -190,6 +189,7 @@ class Profile extends React.Component {
               });
             
             const mergedTelephones = this.state.telephones.concat(telephones)
+            console.log(mergedTelephones)
   
             this.setState({
               webId: webId,
