@@ -4,6 +4,7 @@ import Profile from "./components/stateful_components/Profile";
 import ContactsPage from "./components/stateful_components/ContactsPage"
 import Navigation from "./components/stateful_components/Navigation";
 import auth from "solid-auth-client";
+import HealthPage from "./components/stateful_components/HealthPage/HealthPage";
 
 class App extends React.Component {
   constructor(props) {
@@ -61,6 +62,14 @@ class App extends React.Component {
                 <Profile
                   webId={this.state.webId}
                   logout={this.logout.bind(this)}
+                />
+              )}
+              exact
+            />
+            <Route
+              path="/health"
+              render={() => (
+                <HealthPage
                 />
               )}
               exact
