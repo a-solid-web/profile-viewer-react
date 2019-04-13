@@ -11,14 +11,12 @@ import TelephoneSlot from "../../functional_components/TelephoneSlot";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import JobSlot from "../../functional_components/JobSlot";
-
 const FOAF = new rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const VCARD = new rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
 const RDF = new rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 const PREQ = new rdf.Namespace(
   "https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf#"
 );
-
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -42,7 +40,6 @@ class Profile extends React.Component {
       editJob: false
     };
   }
-
   fetchUser = () => {
     auth.trackSession(session => {
       if (!session) {
@@ -50,41 +47,32 @@ class Profile extends React.Component {
       } else {
         const webId = session.webId;
         const privateCard = webId.replace("profile", "private");
-
         const store = rdf.graph();
         const fetcher = new rdf.Fetcher(store);
         const updater = new rdf.UpdateManager(store);
-
         fetcher.load(webId).then(() => {
           const names = store.each(rdf.sym(webId), FOAF("name")).map(name => {
             return [name.value, "public"];
           });
-
           const picture = store.any(rdf.sym(webId), VCARD("hasPhoto"));
           const pictureValue = picture ? picture.value : "";
-
           const jobs = store.each(rdf.sym(webId), VCARD("role")).map(job => {
             return [job.value, "public"];
           });
-
           const bios = store.each(rdf.sym(webId), VCARD("note")).map(bio => {
             return [bio.value, "public"];
           });
-
           const emails = store
             .each(rdf.sym(webId), VCARD("hasEmail"))
             .map(emailBlankId => {
               const email = store.any(rdf.sym(emailBlankId), VCARD("value"));
               const emailValue = email.value;
-
               const emailType = store.any(rdf.sym(emailBlankId), RDF("type"));
               const emailTypeValue = emailType
                 ? emailType.value.split("#")[1] + "-Email"
                 : "Email";
-
               return [emailValue, emailBlankId.value, emailTypeValue, "public"];
             });
-
           const telephones = store
             .each(rdf.sym(webId), VCARD("hasTelephone"))
             .map(telephoneBlankId => {
@@ -93,7 +81,6 @@ class Profile extends React.Component {
                 VCARD("value")
               );
               const telephoneValue = telephone.value;
-
               const telephoneType = store.any(
                 rdf.sym(telephoneBlankId),
                 RDF("type")
@@ -101,7 +88,6 @@ class Profile extends React.Component {
               const telephoneTypeValue = telephoneType
                 ? telephoneType.value.split("#")[1] + "-Phone"
                 : "Phone";
-
               return [
                 telephoneValue,
                 telephoneBlankId,
@@ -109,7 +95,6 @@ class Profile extends React.Component {
                 "public"
               ];
             });
-
           this.setState({
             webId: webId,
             name: names,
@@ -122,7 +107,6 @@ class Profile extends React.Component {
             editMode: false
           });
         });
-
         fetcher
           .load(privateCard)
           .then(() => {
@@ -143,26 +127,20 @@ class Profile extends React.Component {
               }
             );
           });
-
         // let ins = rdf.st(
         //   rdf.sym(webId),
         // PREQ("requestFrom"),
         // rdf.sym(webId),
         // rdf.sym(webId).doc());
-
         // let del = [];
-
         // updater.update(del, ins,(uri, ok, message) => {
         //   if(ok) {
         //     console.log("tested ontology")
         //   } else alert(message);
         //   console.log(message);
         // })
-
         // TEST NOTIFICATION
-
         const inboxAddress = "https://elliottbrunet.solid.community/inbox";
-
         let newTurtleFile = [
           rdf.st(
             rdf.sym(inboxAddress),
@@ -183,7 +161,6 @@ class Profile extends React.Component {
           //   rdf.sym(inboxAddress).doc()
           // )
         ];
-
         updater.put(
           rdf.sym(inboxAddress),
           newTurtleFile,
@@ -193,33 +170,36 @@ class Profile extends React.Component {
             else console.log(message);
           }
         );
-
-      //   let createTurtle =
-      //     "<" +
-      //     inboxAddress +
-      //     "> <https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf/requestedFrom> <" +
-      //     webId+
-      //     ">;
-      //   //When deleting use DELETE instead of INSERT
-      //   const options = {
-      //     noMeta: true,
-      //     contentType: "text/turtle",
-      //     body: createTurtle
-      //   };
-
-      //   fetcher.webOperation("POST", inboxAddress, options)
-      // }
+        let createTurtle =
+          '@prefix : <#>.
+          @prefix inbox: <./>.
+          @prefix n0: <http://purl.org/dc/elements/1.1/>.
+          @prefix XML: <http://www.w3.org/2001/XMLSchema#>.
+          @prefix flow: <http://www.w3.org/2005/01/wf/flow#>.
+          @prefix n: <http://rdfs.org/sioc/ns#>.
+          @prefix n1: <http://xmlns.com/foaf/0.1/>.
+          @prefix c: </profile/card#>.
+          @prefix PREQ: <https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf/> .
+          inbox:requests
+            a PREQ:DataRequest;
+            PREQ:requestFrom <https://malte18.solid.community/profile/card#me /> .
+            PREQ:requestDataType PREQ:HealtData;'
+        //When deleting use DELETE instead of INSERT
+        const options = {
+          noMeta: true,
+          contentType: "text/turtle",
+          body: createTurtle
+        };
+        fetcher.webOperation("POST", inboxAddress, options)
+      }
     });
   };
-
   setProfilePicture = e => {
     var filePath = e.target.files[0];
     var store = rdf.graph();
     var fetcher = new rdf.Fetcher(store);
-
     let webId = this.props.webId;
     let currentPicture = this.state.picture;
-
     var reader = new FileReader();
     reader.onload = function() {
       var data = this.result;
@@ -260,15 +240,12 @@ class Profile extends React.Component {
     };
     reader.readAsArrayBuffer(filePath);
   };
-
   applyNameChanges(e) {
     const oldName = e.target.placeholder;
     const store = rdf.graph();
     const updater = new rdf.UpdateManager(store);
-
     var del;
     var ins;
-
     del = rdf.st(
       rdf.sym(this.props.webId),
       FOAF("name"),
@@ -281,7 +258,6 @@ class Profile extends React.Component {
       rdf.lit(this.state.newName),
       rdf.sym(this.props.webId).doc()
     );
-
     var updatePromise = new Promise((resolve, reject) => {
       updater.update(del, ins, (uri, ok, message) => {
         if (ok) {
@@ -295,23 +271,18 @@ class Profile extends React.Component {
       this.fetchUser();
     });
   }
-
   getNewName(e) {
     this.setState({ newName: e.target.value });
   }
-
   toggleEditName() {
     this.setState({ editName: !this.state.editName });
   }
-
   applyBioChanges(e) {
     const oldBio = e.target.placeholder;
     const store = rdf.graph();
     const updater = new rdf.UpdateManager(store);
-
     var del;
     var ins;
-
     del = rdf.st(
       rdf.sym(this.props.webId),
       VCARD("note"),
@@ -324,7 +295,6 @@ class Profile extends React.Component {
       rdf.lit(this.state.newBio),
       rdf.sym(this.props.webId).doc()
     );
-
     var updatePromise = new Promise((resolve, reject) => {
       updater.update(del, ins, (uri, ok, message) => {
         if (ok) {
@@ -338,26 +308,20 @@ class Profile extends React.Component {
       this.fetchUser();
     });
   }
-
   getNewBio(e) {
     this.setState({ newBio: e.target.value });
   }
-
   toggleEditBio() {
     this.setState({ editBio: !this.state.editBio });
   }
-
   applyEmailChanges(e) {
     if (this.state.newEmail !== "") {
       const oldEmail = e.target.placeholder;
       const oldEmailBlankId = e.target.id;
-
       const store = rdf.graph();
       const updater = new rdf.UpdateManager(store);
-
       var del;
       var ins;
-
       del = rdf.st(
         rdf.sym(oldEmailBlankId),
         VCARD("value"),
@@ -370,7 +334,6 @@ class Profile extends React.Component {
         rdf.sym("mailto:" + this.state.newEmail),
         rdf.sym(this.state.webId).doc()
       );
-
       var updatePromise = new Promise((resolve, reject) => {
         updater.update(del, ins, (uri, ok, message) => {
           if (ok) {
@@ -386,23 +349,18 @@ class Profile extends React.Component {
       this.setState({ editEmail: false });
     }
   }
-
   getNewEmail(e) {
     this.setState({ newEmail: e.target.value });
   }
-
   toggleEditEmail() {
     this.setState({ editEmail: !this.state.editEmail });
   }
-
   applyJobChanges(e) {
     const oldJob = e.target.placeholder;
     const store = rdf.graph();
     const updater = new rdf.UpdateManager(store);
-
     var del;
     var ins;
-
     del = rdf.st(
       rdf.sym(this.props.webId),
       VCARD("role"),
@@ -415,7 +373,6 @@ class Profile extends React.Component {
       rdf.lit(this.state.newJob),
       rdf.sym(this.props.webId).doc()
     );
-
     var updatePromise = new Promise((resolve, reject) => {
       updater.update(del, ins, (uri, ok, message) => {
         if (ok) {
@@ -428,26 +385,20 @@ class Profile extends React.Component {
       this.fetchUser();
     });
   }
-
   getNewJob(e) {
     this.setState({ newJob: e.target.value });
   }
-
   toggleEditJob() {
     this.setState({ editJob: !this.state.editJob });
   }
-
   applyTelephoneChanges(e) {
     if (this.state.newTelephone !== "") {
       const oldTelephone = e.target.placeholder;
       const oldTelephoneBlankId = e.target.id;
-
       const store = rdf.graph();
       const updater = new rdf.UpdateManager(store);
-
       var del;
       var ins;
-
       del = rdf.st(
         rdf.sym(oldTelephoneBlankId),
         VCARD("value"),
@@ -460,7 +411,6 @@ class Profile extends React.Component {
         rdf.sym("tel:" + this.state.newTelephone),
         rdf.sym(this.state.webId).doc()
       );
-
       var updatePromise = new Promise((resolve, reject) => {
         updater.update(del, ins, (uri, ok, message) => {
           if (ok) {
@@ -476,26 +426,20 @@ class Profile extends React.Component {
       this.setState({ editTelephone: false });
     }
   }
-
   getNewTelephone(e) {
     this.setState({ newTelephone: e.target.value });
   }
-
   toggleEditTelephone() {
     this.setState({ editTelephone: !this.state.editTelephone });
   }
-
   toggleTelephoneAccess(e) {
     const telephoneBlankId = e.target.id.split("?")[0];
     const telephoneValue = e.target.id.split("?")[1];
     const telephoneDoc = telephoneBlankId.split("#")[0];
     console.log(telephoneDoc);
-
     const store = rdf.graph();
     const updater = new rdf.UpdateManager(store);
-
     const access = e.target.innerHTML;
-
     if (access === "public") {
       const del = [
         rdf.st(
@@ -505,7 +449,6 @@ class Profile extends React.Component {
           rdf.sym(telephoneDoc).doc()
         )
       ];
-
       const ins = [
         rdf.st(
           rdf.sym(telephoneDoc),
@@ -520,7 +463,6 @@ class Profile extends React.Component {
           rdf.sym(telephoneDoc.replace("profile", "private")).doc()
         )
       ];
-
       updater.update(del, ins, (uri, ok, message) => {
         if (ok) console.log("Made public");
         else alert(message);
@@ -540,7 +482,6 @@ class Profile extends React.Component {
           rdf.sym(telephoneDoc.replace("profile", "private")).doc()
         )
       ];
-
       const ins = [
         rdf.st(
           rdf.sym(telephoneDoc),
@@ -549,18 +490,15 @@ class Profile extends React.Component {
           rdf.sym(telephoneDoc).doc()
         )
       ];
-
       updater.update(del, ins, (uri, ok, message) => {
         if (ok) console.log("Made public");
         else alert(message);
       });
     }
   }
-
   componentDidMount() {
     this.fetchUser();
   }
-
   render() {
     let nameSlotMarkup = this.state.name.map((name, index) => {
       return (
@@ -574,7 +512,6 @@ class Profile extends React.Component {
         />
       );
     });
-
     let jobSlotMarkup = this.state.job.map((job, index) => {
       return (
         <JobSlot
@@ -587,7 +524,6 @@ class Profile extends React.Component {
         />
       );
     });
-
     let bioSlotMarkup = this.state.bio.map((bio, index) => {
       return (
         <BioSlot
@@ -600,7 +536,6 @@ class Profile extends React.Component {
         />
       );
     });
-
     let emailSlotsMarkup = this.state.emails.map((email, index) => {
       return (
         <EmailSlot
@@ -613,7 +548,6 @@ class Profile extends React.Component {
         />
       );
     });
-
     let telephoneSlotsMarkup = this.state.telephones.map((telephone, index) => {
       return (
         <TelephoneSlot
@@ -627,7 +561,6 @@ class Profile extends React.Component {
         />
       );
     });
-
     return (
       <Container>
         {this.props.webId ? (
@@ -658,5 +591,4 @@ class Profile extends React.Component {
     );
   }
 }
-
 export default Profile;
