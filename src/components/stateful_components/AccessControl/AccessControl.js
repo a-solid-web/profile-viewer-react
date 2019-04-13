@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 
 const VCARD = new rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
+const FOAF = new rdf.Namespace("http://xmlns.com/foaf/0.1/");
 
 class AccessControl extends React.Component {
   constructor(props) {
@@ -14,6 +15,98 @@ class AccessControl extends React.Component {
       webId: undefined,
       accessView: props.accessView
     };
+  }
+
+  getPredicate(type) {
+    switch (type) {
+      case "bio":
+        return VCARD("note");
+      default:
+        return FOAF("name");
+    }
+  }
+
+  toggleAccess(e) {
+    const webId = this.state.webId;
+    const privateDoc = webId.replace("profile", "private");
+    const value = e.target.id;
+
+    const predicate = this.getPredicate(e.target.getAttribute("type"));
+
+    const store = rdf.graph();
+    const updater = new rdf.UpdateManager(store);
+
+    const access = e.target.innerHTML;
+
+    if (access === "Private") {
+      const delPublic = [
+        rdf.st(rdf.sym(webId), predicate, rdf.lit(value), rdf.sym(webId).doc())
+      ];
+
+      const insPublic = [
+        rdf.st(
+          rdf.sym(webId),
+          predicate,
+          rdf.lit("Request Access"),
+          rdf.sym(webId).doc()
+        )
+      ];
+
+      updater.update(delPublic, insPublic, (uri, ok, message) => {
+        if (ok) console.log("Made public");
+        else alert(message);
+      });
+
+      const delPrivate = [];
+
+      const insPrivate = [
+        rdf.st(
+          rdf.sym(privateDoc),
+          predicate,
+          rdf.lit(value),
+          rdf.sym(privateDoc).doc()
+        )
+      ];
+
+      updater.update(delPrivate, insPrivate, (uri, ok, message) => {
+        if (ok) console.log("Made private");
+        else alert(message);
+      });
+    } else if (access === "Public") {
+      const delPublic = [
+        rdf.st(
+          rdf.sym(webId),
+          predicate,
+          rdf.lit("Request Access"),
+          rdf.sym(webId).doc()
+        )
+      ];
+
+      const insPublic = [
+        rdf.st(rdf.sym(webId), predicate, rdf.lit(value), rdf.sym(webId).doc())
+      ];
+
+      updater.update(delPublic, insPublic, (uri, ok, message) => {
+        if (ok) console.log("Made public");
+        else alert(message);
+      });
+
+      const delPrivate = [
+        rdf.st(
+          rdf.sym(privateDoc),
+          predicate,
+          rdf.lit(value),
+          rdf.sym(privateDoc).doc()
+        )
+      ];
+
+      const insPrivate = [];
+
+      updater.update(delPrivate, insPrivate, (uri, ok, message) => {
+        if (ok) console.log("Made public");
+        else alert(message);
+      });
+    }
   }
 
   toggleBlankIdAccess(e) {
@@ -158,6 +251,11 @@ class AccessControl extends React.Component {
         id = this.props.email[1] + "?" + this.props.email[0];
         type = "email";
         break;
+      case "bio":
+        access = this.props.bio[1];
+        id = this.props.bio[0];
+        type = "bio";
+        break;
       default:
         return "";
     }
@@ -166,13 +264,29 @@ class AccessControl extends React.Component {
       access === "public" ? (
         <div>
           <Dropdown.Item disabled>Public</Dropdown.Item>
-          <Dropdown.Item id={id} onClick={this.toggleBlankIdAccess} type={type}>
+          <Dropdown.Item
+            id={id}
+            onClick={
+              type !== "email" || type !== "telephone"
+                ? this.toggleAccess.bind(this)
+                : this.toggleBlankIdAccess
+            }
+            type={type}
+          >
             Private
           </Dropdown.Item>
         </div>
       ) : (
         <div>
-          <Dropdown.Item id={id} onClick={this.toggleBlankIdAccess} type={type}>
+          <Dropdown.Item
+            id={id}
+            onClick={
+              type !== "email" || type !== "telephone"
+                ? this.toggleAccess.bind(this)
+                : this.toggleBlankIdAccess
+            }
+            type={type}
+          >
             Public
           </Dropdown.Item>
           <Dropdown.Item disabled>Private</Dropdown.Item>

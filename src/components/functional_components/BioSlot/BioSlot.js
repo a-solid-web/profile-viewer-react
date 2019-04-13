@@ -2,12 +2,10 @@ import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
-import { Typography } from "yoda-design-system";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Typography, Button } from "yoda-design-system";
 
 const BioSlot = props => {
   const bio = props.bio[0];
-  const access = props.bio[1];
 
   let bioDisplay = props.editMode ? (
     <FormControl
@@ -20,18 +18,6 @@ const BioSlot = props => {
     <p onClick={props.onClick}>{bio}</p>
   );
 
-  const dropDownMarkup = (access === "public") ? (
-    <div>
-      <Dropdown.Item disabled>Public</Dropdown.Item>
-      <Dropdown.Item>Private</Dropdown.Item>
-    </div>
-  ) : (
-    <div>
-      <Dropdown.Item>Public</Dropdown.Item>
-      <Dropdown.Item disabled>Private</Dropdown.Item>
-    </div>
-  )
-
   return (
     <div>
       <Row />
@@ -43,12 +29,13 @@ const BioSlot = props => {
           <Row>{bioDisplay}</Row>
         </Col>
         <Col lg="3">
-          <Dropdown size="sm">
-            <Dropdown.Toggle variant="secondary">Access</Dropdown.Toggle>
-            <Dropdown.Menu>
-              {dropDownMarkup}
-            </Dropdown.Menu>
-          </Dropdown>
+          <Button
+            onClick={props.onToggleAccess}
+            id="bio"
+            index={props.index}
+          >
+            Change Access
+          </Button>
         </Col>
       </Row>
     </div>

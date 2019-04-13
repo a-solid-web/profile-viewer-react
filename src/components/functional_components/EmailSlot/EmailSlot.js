@@ -29,11 +29,7 @@ const EmailSlot = props => {
         <Row>{emailDisplay}</Row>
       </Col>
       <Col lg="3">
-        <Button
-          onClick={props.onToggleAccess}
-          id="email"
-          index={props.index}
-        >
+        <Button onClick={props.onToggleAccess} id="email" index={props.index}>
           Change Access
         </Button>
       </Col>

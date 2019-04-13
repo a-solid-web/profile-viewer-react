@@ -529,6 +529,11 @@ class Profile extends React.Component {
         return (
           <AccessControl accessView={this.state.accessView} email={email} />
         );
+      case "bio":
+        const bio = this.state.bio[this.state.accessIndex];
+        return (
+          <AccessControl accessView={this.state.accessView} bio={bio}/>
+        );
       default:
         return "";
     }
@@ -536,6 +541,9 @@ class Profile extends React.Component {
 
   render() {
     let nameSlotMarkup = this.state.name.map((name, index) => {
+      if (name[0] === "Request Access") {
+        return "";
+      }
       return (
         <NameSlot
           name={name}
@@ -549,6 +557,9 @@ class Profile extends React.Component {
     });
 
     let jobSlotMarkup = this.state.job.map((job, index) => {
+      if (job[0] === "Request Access") {
+        return "";
+      }
       return (
         <JobSlot
           job={job}
@@ -562,14 +573,19 @@ class Profile extends React.Component {
     });
 
     let bioSlotMarkup = this.state.bio.map((bio, index) => {
+      if (bio[0] === "Request Access") {
+        return "";
+      }
       return (
         <BioSlot
           bio={bio}
           key={index}
+          index={index}
           editMode={this.state.editBio}
           onBlur={this.applyBioChanges.bind(this)}
           onChange={this.getNewBio.bind(this)}
           onClick={this.toggleEditBio.bind(this)}
+          onToggleAccess={this.changeAccessView.bind(this)}
         />
       );
     });
