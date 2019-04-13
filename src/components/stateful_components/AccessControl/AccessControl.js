@@ -21,6 +21,8 @@ class AccessControl extends React.Component {
     switch (type) {
       case "bio":
         return VCARD("note");
+      case "job":
+        return VCARD("role");
       default:
         return FOAF("name");
     }
@@ -255,6 +257,11 @@ class AccessControl extends React.Component {
         access = this.props.bio[1];
         id = this.props.bio[0];
         type = "bio";
+        break;
+      case "job":
+        access = this.props.job[1];
+        id = this.props.job[0];
+        type = "job";
         break;
       default:
         return "";

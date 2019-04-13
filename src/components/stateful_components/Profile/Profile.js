@@ -531,9 +531,10 @@ class Profile extends React.Component {
         );
       case "bio":
         const bio = this.state.bio[this.state.accessIndex];
-        return (
-          <AccessControl accessView={this.state.accessView} bio={bio}/>
-        );
+        return <AccessControl accessView={this.state.accessView} bio={bio} />;
+      case "job":
+        const job = this.state.job[this.state.accessIndex];
+        return <AccessControl accessView={this.state.accessView} job={job} />;
       default:
         return "";
     }
@@ -564,10 +565,12 @@ class Profile extends React.Component {
         <JobSlot
           job={job}
           key={index}
+          index={index}
           editMode={this.state.editJob}
           onBlur={this.applyJobChanges.bind(this)}
           onChange={this.getNewJob.bind(this)}
           onClick={this.toggleEditJob.bind(this)}
+          onToggleAccess={this.changeAccessView.bind(this)}
         />
       );
     });
