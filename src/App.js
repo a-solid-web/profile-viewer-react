@@ -5,6 +5,7 @@ import Profile from "./components/stateful_components/Profile";
 import ContactsPage from "./components/stateful_components/ContactsPage"
 import Navigation from "./components/stateful_components/Navigation";
 import OverviewPage from "./components/stateful_components/OverviewPage/OverviewPage";
+import HealthPage from "./components/stateful_components/HealthPage/HealthPage";
 
 class App extends React.Component {
   constructor(props) {
@@ -60,6 +61,14 @@ class App extends React.Component {
             <Route
               path="/"
               render={() => <Profile logout={this.logout.bind(this)} />}
+              exact
+            />
+            <Route
+              path="/health"
+              render={() => (
+                <HealthPage
+                />
+              )}
               exact
             />
             <Route path="/contacts" render={() => <ContactsPage />} exact />
