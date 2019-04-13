@@ -15,8 +15,9 @@ import JobSlot from "../../functional_components/JobSlot";
 const FOAF = new rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const VCARD = new rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
 const RDF = new rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-const PREQ = new rdf.Namespace("https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf/");
-
+const PREQ = new rdf.Namespace(
+  "https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf#"
+);
 
 class Profile extends React.Component {
   constructor(props) {
@@ -142,39 +143,72 @@ class Profile extends React.Component {
               }
             );
           });
-          
-      
-          let ins = rdf.st(
-            rdf.sym(webId), 
-          PREQ("requestFrom"), 
-          rdf.sym(webId), 
-          rdf.sym(webId).doc());
-      
-          let del = []; 
-      
-          updater.update(del, ins,(uri, ok, message) => {
-            if(ok) {
-              console.log("tested ontology")
-            } else alert(message); 
-            console.log(message); 
-          })
 
-          //   let  = rdf.st(
-          //   rdf.sym(webId), 
-          // FOAF("Name"), 
-          // rdf.lit("malte"), 
-          // rdf.sym(webId).doc());
-      
-          // let ins = []; 
-      
-          // updater.update(del, ins,(uri, ok, message) => {
-          //   if(ok) {
-          //     console.log("tested ontology")
-          //   } else alert(message); 
-          //   console.log(message); 
-          // })
-        
-      }
+        // let ins = rdf.st(
+        //   rdf.sym(webId),
+        // PREQ("requestFrom"),
+        // rdf.sym(webId),
+        // rdf.sym(webId).doc());
+
+        // let del = [];
+
+        // updater.update(del, ins,(uri, ok, message) => {
+        //   if(ok) {
+        //     console.log("tested ontology")
+        //   } else alert(message);
+        //   console.log(message);
+        // })
+
+        // TEST NOTIFICATION
+
+        const inboxAddress = "https://elliottbrunet.solid.community/inbox";
+
+        let newTurtleFile = [
+          rdf.st(
+            rdf.sym(inboxAddress),
+            PREQ("requestedFrom"),
+            rdf.sym(webId),
+            rdf.sym(inboxAddress).doc()
+          ),
+          // rdf.st(
+          //   rdf.sym(inboxAddress),
+          //   PREQ("requestedDataType"),
+          //   PREQ("HealthData"),
+          //   rdf.sym(inboxAddress).doc()
+          // ),
+          // rdf.st(
+          //   rdf.sym(inboxAddress),
+          //   RDF("type"),
+          //   PREQ("DataRequest"),
+          //   rdf.sym(inboxAddress).doc()
+          // )
+        ];
+
+        updater.put(
+          rdf.sym(inboxAddress),
+          newTurtleFile,
+          "text/turtle",
+          function(uri, ok, message) {
+            if (ok) console.log("New turtle has been created");
+            else console.log(message);
+          }
+        );
+
+      //   let createTurtle =
+      //     "<" +
+      //     inboxAddress +
+      //     "> <https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf/requestedFrom> <" +
+      //     webId+
+      //     ">;
+      //   //When deleting use DELETE instead of INSERT
+      //   const options = {
+      //     noMeta: true,
+      //     contentType: "text/turtle",
+      //     body: createTurtle
+      //   };
+
+      //   fetcher.webOperation("POST", inboxAddress, options)
+      // }
     });
   };
 
@@ -226,8 +260,6 @@ class Profile extends React.Component {
     };
     reader.readAsArrayBuffer(filePath);
   };
-
-
 
   applyNameChanges(e) {
     const oldName = e.target.placeholder;
