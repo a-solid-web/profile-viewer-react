@@ -89,7 +89,8 @@ class OverviewPage extends React.Component {
           sender.value,
           picture.value,
           ["Access " + requestTypeValue + " (" + requestedRessourceValue + ")"],
-          requestedRessourceValue
+          requestedRessourceValue,
+          notificationAddress
         ]);
       });
     });
@@ -98,9 +99,11 @@ class OverviewPage extends React.Component {
   acceptRequest(e) {
     const file = e.target.id;
     const sender = e.target.getAttribute("sender");
-    const aclFile = file + ".acl";
+    const notification = e.target.getAttribute("notification");
+    const aclFile = file + "/.acl";
     const ownerNode = aclFile + "#owner";
     const viewerNode = aclFile + "#viewer";
+    console.log(ownerNode)
 
     const accessStore = rdf.graph();
     const accessFetcher = new rdf.Fetcher(accessStore);
@@ -109,8 +112,8 @@ class OverviewPage extends React.Component {
     accessFetcher
       .load(aclFile)
       .then(response => {
-        const del = [];
-        const ins = [
+        const delACL = [];
+        const insACL = [
           rdf.st(
             rdf.sym(
               viewerNode,
@@ -121,7 +124,23 @@ class OverviewPage extends React.Component {
           )
         ];
 
-        accessUpdater.put(del, ins, (uri, ok, message) => {
+        accessUpdater.put(delACL, insACL, (uri, ok, message) => {
+          console.log("New triples have been added.");
+        });
+
+        const delNotif = [];
+        const insNotif = [
+          rdf.st(
+            rdf.sym(
+              notification,
+              PREQ("hasStatus"),
+              rdf.lit("Accepted"),
+              rdf.sym(viewerNode).doc()
+            )
+          )
+        ];
+
+        accessUpdater.put(delNotif, insNotif, (uri, ok, message) => {
           console.log("New triples have been added.");
         });
       })
@@ -177,16 +196,18 @@ class OverviewPage extends React.Component {
           )
         ];
 
-        accessUpdater.put(
-          rdf.sym(aclFile),
-          newACLTriples,
-          "text/turtle",
-          (uri, ok, message) => {
-            console.log(
-              "New Acl file has been created. New triples have already been added."
-            );
-          }
-        );
+        console.log(newACLTriples)
+
+        // accessUpdater.put(
+        //   rdf.sym(aclFile),
+        //   newACLTriples,
+        //   "text/turtle",
+        //   (uri, ok, message) => {
+        //     console.log(
+        //       "New Acl file has been created. New triples have already been added."
+        //     );
+        //   }
+        // );
       });
   }
 

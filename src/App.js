@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import auth from "solid-auth-client";
 import Profile from "./components/stateful_components/Profile";
+import ContactsPage from "./components/stateful_components/ContactsPage"
 import Navigation from "./components/stateful_components/Navigation";
 import OverviewPage from "./components/stateful_components/OverviewPage/OverviewPage";
 
@@ -61,6 +62,7 @@ class App extends React.Component {
               render={() => <Profile logout={this.logout.bind(this)} />}
               exact
             />
+            <Route path="/contacts" render={() => <ContactsPage />} exact />
           </Switch>
         </div>
       </BrowserRouter>

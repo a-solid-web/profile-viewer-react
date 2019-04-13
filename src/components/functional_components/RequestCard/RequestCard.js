@@ -10,6 +10,7 @@ class RequestCard extends React.Component {
     const avatar = request[2];
     const permissions = request[3];
     const requestedRessource = request[4];
+    const notification = request[5]
 
     return (
       <div className="requestcard">
@@ -30,6 +31,7 @@ class RequestCard extends React.Component {
                   className="requestcard-request-button"
                   variant="outlined"
                   sender={sender}
+                  notification={notification}
                   id={requestedRessource}
                   onClick={this.props.onAccept}
                 >
@@ -39,6 +41,7 @@ class RequestCard extends React.Component {
                   className="requestcard-request-button"
                   variant="outlined"
                   sender={sender}
+                  notification={notification}
                   id={requestedRessource}
                   onClick={this.props.onDeny}
                 >
