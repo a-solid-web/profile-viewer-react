@@ -140,51 +140,20 @@ class Profile extends React.Component {
         //   console.log(message);
         // })
         // TEST NOTIFICATION
-        const inboxAddress = "https://elliottbrunet.solid.community/inbox";
-        let newTurtleFile = [
-          rdf.st(
-            rdf.sym(inboxAddress),
-            PREQ("requestedFrom"),
-            rdf.sym(webId),
-            rdf.sym(inboxAddress).doc()
-          )
-          // rdf.st(
-          //   rdf.sym(inboxAddress),
-          //   PREQ("requestedDataType"),
-          //   PREQ("HealthData"),
-          //   rdf.sym(inboxAddress).doc()
-          // ),
-          // rdf.st(
-          //   rdf.sym(inboxAddress),
-          //   RDF("type"),
-          //   PREQ("DataRequest"),
-          //   rdf.sym(inboxAddress).doc()
-          // )
-        ];
-        // updater.put(
-        //   rdf.sym(inboxAddress),
-        //   newTurtleFile,
-        //   "text/turtle",
-        //   function(uri, ok, message) {
-        //     if (ok) console.log("New turtle has been created");
-        //     else console.log(message);
-        //   }
-        // );
-        let createTurtle = `@prefix : <#>.
-@prefix inbox: <./>.
-@prefix n0: <http://purl.org/dc/elements/1.1/>.
-@prefix XML: <http://www.w3.org/2001/XMLSchema#>.
-@prefix flow: <http://www.w3.org/2005/01/wf/flow#>.
-@prefix n: <http://rdfs.org/sioc/ns#>.
-@prefix n1: <http://xmlns.com/foaf/0.1/>.
-@prefix c: </profile/card#>.
-@prefix PREQ: <https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf/> .
+        const inboxAddress = "https://ludwigschubert.solid.community/inbox";
 
-inbox:requests
-  a PREQ:DataRequest;
+        let createTurtle = `
+@prefix : <#>.
+@prefix inbox: <./>.
+@prefix solid: <http://www.w3.org/ns/solid/terms#>.
+@prefix as: <http://www.w3.org/ns/activitystreams#>.
+@prefix PREQ: <https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf#> .
+
+<> a solid:Notification , as:Announce, PREQ:DataRequest;
   PREQ:requestDataType PREQ:HealthData;
-  PREQ:requestFrom <https://malte18.solid.community/profile/card  #me> .
-  `;
+  PREQ:requests <https://ludwigschubert.solid.community/private/health>;
+  PREQ:requestFrom <https://jofr.solid.community/profile/card#me>.
+`;
 
         //When deleting use DELETE instead of INSERT
         const options = {
