@@ -11,6 +11,7 @@ import TelephoneSlot from "../../functional_components/TelephoneSlot";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import JobSlot from "../../functional_components/JobSlot";
+import AccessControl from "../AccessControl";
 
 const FOAF = new rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const VCARD = new rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
@@ -36,7 +37,8 @@ class Profile extends React.Component {
       newTelephone: "",
       editTelephone: false,
       newJob: "",
-      editJob: false
+      editJob: false,
+      toggleAccess: "",
     };
   }
 
@@ -46,7 +48,7 @@ class Profile extends React.Component {
         console.log("You are not logged in");
       } else {
         const webId = session.webId;
-        const privateCard = webId.replace("profile", "private")
+        const privateCard = webId.replace("profile", "private");
 
         const store = rdf.graph();
         const fetcher = new rdf.Fetcher(store);
@@ -120,18 +122,26 @@ class Profile extends React.Component {
           });
         });
 
-        fetcher.load(privateCard).then(() => {
-          console.log("privateCard exists")
-        }).catch((err) => {
-          let newPrivateProfile;
-          newPrivateProfile = [
-            rdf.st(rdf.sym(privateCard), RDF("type"), FOAF("Person"))
-          ]
-          updater.put(rdf.sym(privateCard), newPrivateProfile, "text/turtle", function(uri, ok, message) {
-            if(ok) console.log("New Private Card has been created");
-            else console.log(message);
-          })  
-        })
+        fetcher
+          .load(privateCard)
+          .then(() => {
+            console.log("privateCard exists");
+          })
+          .catch(err => {
+            let newPrivateProfile;
+            newPrivateProfile = [
+              rdf.st(rdf.sym(privateCard), RDF("type"), FOAF("Person"))
+            ];
+            updater.put(
+              rdf.sym(privateCard),
+              newPrivateProfile,
+              "text/turtle",
+              function(uri, ok, message) {
+                if (ok) console.log("New Private Card has been created");
+                else console.log(message);
+              }
+            );
+          });
       }
     });
   };
@@ -413,72 +423,96 @@ class Profile extends React.Component {
     const telephoneBlankId = e.target.id.split("?")[0];
     const telephoneValue = e.target.id.split("?")[1];
     const telephoneDoc = telephoneBlankId.split("#")[0];
-    console.log(telephoneDoc);
+    const telephonePrivateDoc = telephoneDoc.replace("profile", "private")
 
     const store = rdf.graph();
     const updater = new rdf.UpdateManager(store);
 
     const access = e.target.innerHTML;
 
-    if (access === "public") {
-      const del = [
+    if (access === "Private") {
+      const delPublic = [
         rdf.st(
-          rdf.sym(telephoneDoc),
-          VCARD("hasTelephone"),
-          rdf.lit(telephoneValue),
+          rdf.sym(telephoneBlankId),
+          VCARD("value"),
+          rdf.sym(telephoneValue),
           rdf.sym(telephoneDoc).doc()
         )
       ];
 
-      const ins = [
+      const insPublic = [
         rdf.st(
-          rdf.sym(telephoneDoc),
-          VCARD("hasTelephone"),
+          rdf.sym(telephoneBlankId),
+          VCARD("value"),
           rdf.lit("Request Access"),
           rdf.sym(telephoneDoc).doc()
-        ),
-        rdf.st(
-          rdf.sym(telephoneDoc),
-          VCARD("hasTelephone"),
-          rdf.lit("Request Access"),
-          rdf.sym(telephoneDoc.replace("profile", "private")).doc()
         )
       ];
 
-      updater.update(del, ins, (uri, ok, message) => {
+      updater.update(delPublic, insPublic, (uri, ok, message) => {
         if (ok) console.log("Made public");
         else alert(message);
-      })
-    } else if (access === "private"){
-      const del = [
+      });
+
+      const delPrivate = [];
+
+      const insPrivate = [
         rdf.st(
-          rdf.sym(telephoneDoc),
-          VCARD("hasTelephone"),
-          rdf.lit("Request Access"),
-          rdf.sym(telephoneDoc).doc()
-        ),
-        rdf.st(
-          rdf.sym(telephoneDoc),
-          VCARD("hasTelephone"),
-          rdf.lit(telephoneValue),
-          rdf.sym(telephoneDoc.replace("profile", "private")).doc()
+          rdf.sym(telephoneBlankId),
+          VCARD("value"),
+          rdf.sym(telephoneValue),
+          rdf.sym(telephonePrivateDoc).doc()
         )
       ];
 
-      const ins = [
+      updater.update(delPrivate, insPrivate, (uri, ok, message) => {
+        if (ok) console.log("Made public");
+        else alert(message);
+      });
+    } else if (access === "Public") {
+      const delPublic = [
         rdf.st(
-          rdf.sym(telephoneDoc),
-          VCARD("hasTelephone"),
-          rdf.lit(telephoneValue),
+          rdf.sym(telephoneBlankId),
+          VCARD("value"),
+          rdf.lit("Request Access"),
           rdf.sym(telephoneDoc).doc()
         )
       ];
-      
-      updater.update(del, ins, (uri, ok, message) => {
+
+      const insPublic = [
+        rdf.st(
+          rdf.sym(telephoneBlankId),
+          VCARD("value"),
+          rdf.sym(telephoneValue),
+          rdf.sym(telephoneDoc).doc()
+        )
+      ];
+
+      updater.update(delPublic, insPublic, (uri, ok, message) => {
         if (ok) console.log("Made public");
         else alert(message);
-      })
+      });
+
+      const delPrivate = [
+        rdf.st(
+          rdf.sym(telephoneBlankId),
+          VCARD("value"),
+          rdf.sym(telephoneValue),
+          rdf.sym(telephonePrivateDoc).doc()
+        )
+      ];
+
+      const insPrivate = [];
+
+      updater.update(delPrivate, insPrivate, (uri, ok, message) => {
+        if (ok) console.log("Made public");
+        else alert(message);
+      });
     }
+  }
+
+  toggleAccessView(e){
+   console.log(e.target)
   }
 
   componentDidMount() {
@@ -554,6 +588,8 @@ class Profile extends React.Component {
 
     return (
       <Container>
+      <Row>
+        <Col lg="6">
         {this.props.webId ? (
           <div>
             <Row>
@@ -578,6 +614,11 @@ class Profile extends React.Component {
         ) : (
           <p>You are not logged in...</p>
         )}
+        </Col>
+        <Col lg="3">
+          <AccessControl/>
+        </Col>
+      </Row>
       </Container>
     );
   }
