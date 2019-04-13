@@ -5,17 +5,20 @@ import { Button } from "yoda-design-system";
 class RequestCard extends React.Component {
   render() {
     const request = this.props.request;
+    const author = request[0]
+    const avatar = request[2]
+    const permissions = request[3]
     return (
       <div className="requestcard" key={this.props.index}>
         <div className="requestcard-header">
           <img
             className="requestcard-header-avatar"
-            src={request.avatar}
+            src={avatar}
             alt="avatar"
           />
-          <strong>{request.author}</strong> wants to:
+          <strong>{author}</strong> wants to:
         </div>
-        {request.permissions.map((permission, j) => {
+        {permissions.map((permission, j) => {
           return (
             <div className="requestcard-request" key={j}>
               {permission}
@@ -23,6 +26,7 @@ class RequestCard extends React.Component {
                 <Button
                   className="requestcard-request-button"
                   variant="outlined"
+                  onClick={props.onClick}
                 >
                   Accept
                 </Button>

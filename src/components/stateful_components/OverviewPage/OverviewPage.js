@@ -3,11 +3,12 @@ import rdf from "rdflib";
 import auth from "solid-auth-client";
 import "./OverviewPage.css";
 import RequestCard from "../../functional_components/RequestCard";
-import { DH_NOT_SUITABLE_GENERATOR } from "constants";
-import { throws } from "assert";
 
 const LDP = rdf.Namespace("http://www.w3.org/ns/ldp#");
 const ACT = rdf.Namespace("https://www.w3.org/ns/activitystreams#");
+const FOAF = rdf.Namespace("http://xmlns.com/foaf/0.1/");
+const VCARD = rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
+const PREQ = rdf.Namespace("https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf#");
 
 class OverviewPage extends React.Component {
   constructor(props) {
@@ -15,7 +16,9 @@ class OverviewPage extends React.Component {
 
     this.addRequest = this.addRequest.bind(this);
     this.removeRequest = this.removeRequest.bind(this);
-    this.fetchNotificationAddresses = this.fetchNotificationAddresses.bind(this);
+    this.fetchNotificationAddresses = this.fetchNotificationAddresses.bind(
+      this
+    );
     this.fetchNotification = this.fetchNotification.bind(this);
 
     this.state = {
@@ -24,35 +27,84 @@ class OverviewPage extends React.Component {
     };
   }
 
-  fetchNotificationAddresses(webId){
+  fetchNotificationAddresses(webId) {
     let inboxStore = rdf.graph();
     let inboxFetcher = new rdf.Fetcher(inboxStore);
 
     let inboxAddress = webId.replace("profile/card#me", "inbox");
 
-    inboxFetcher.load(inboxAddress).then((response) => {
-      const notificationAddresses = inboxStore.each(rdf.sym(inboxAddress), LDP("contains"));
-      notificationAddresses.forEach((notificationAddress) => {
-        const notificationName = notificationAddress.value.split("/")[3]
-        this.fetchNotification(inboxAddress + "/" + notificationName)
-      })
-    })
+    inboxFetcher.load(inboxAddress).then(response => {
+      const notificationAddresses = inboxStore.each(
+        rdf.sym(inboxAddress),
+        LDP("contains")
+      );
+
+      notificationAddresses.forEach(
+        (notificationAddress) => {
+          const notificationAddressValue = inboxAddress + "/" + notificationAddress.value.split("/")[3]
+          this.fetchNotification(notificationAddressValue);
+        }
+      );
+    });
   }
 
-  fetchNotification(notificationAddress){
+  fetchNotification(notificationAddress) {
     let notificationStore = rdf.graph();
     let notificationFetcher = new rdf.Fetcher(notificationStore);
 
-    notificationFetcher.load(notificationAddress).then((response) => {
-      const sender = notificationStore.any(rdf.sym(notificationAddress), ACT("actor"));
-      console.log(sender.value)
-    })
+    notificationFetcher.load(notificationAddress).then(response => {
+      const sender = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("requestFrom")
+      );
+
+      if (!sender){
+        return;
+      }
+
+      const requestType = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("requestDataType")
+      )
+      const requestTypeValue = requestType.value.split("#")[1]
+
+      const requestedRessource = notificationStore.any(rdf.sym(notificationAddress), PREQ("requests"))
+      const requestedRessourceValue = requestedRessource.value
+
+      const senderStore = rdf.graph();
+      const senderFetcher = new rdf.Fetcher(senderStore);
+
+      console.log(sender)
+      senderFetcher.load(sender).then(response => {
+        const picture = senderStore.any(rdf.sym(sender), VCARD("hasPhoto"));
+        const name = senderStore.any(rdf.sym(sender), FOAF("name"));
+
+        this.addRequest([
+          name.value,
+          sender.value,
+          picture.value,
+          ["Access " + requestTypeValue + " (" + requestedRessourceValue + ")"],
+          requestedRessourceValue
+        ])
+      });
+    });
+  }
+
+  acceptRequest(e){
+    console.log(e.target.id)
+  }
+
+  addNotification(name, sender, picture, requestType){
+    const requests = this.state.requests
+    requests.push()
+    return;
   }
 
   addRequest(newRequest) {
     const requests = this.state.requests.slice();
     requests.push(newRequest);
     this.setState({ requests: requests });
+    console.log(this.state.requests)
   }
 
   removeRequest(input) {
@@ -90,18 +142,18 @@ class OverviewPage extends React.Component {
     }
   }
 
-  componentDidMount(){
-    auth.trackSession((session) => {
-      if (!session){
-        console.log("You are not logged in...")
+  componentDidMount() {
+    auth.trackSession(session => {
+      if (!session) {
+        console.log("You are not logged in...");
       } else {
         this.setState({
           webId: session.webId
-        })
+        });
       }
 
       this.fetchNotificationAddresses(this.state.webId);
-    })
+    });
   }
 
   render() {
