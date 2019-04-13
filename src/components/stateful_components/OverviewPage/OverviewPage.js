@@ -257,7 +257,7 @@ class OverviewPage extends React.Component {
   getRequests() {
     if (this.state.requests.length === 0) {
       return (
-        <div className="requestcards-card-request">
+        <div className="requestcard-request">
           Looks like you don't have any requests at the moment
         </div>
       );
