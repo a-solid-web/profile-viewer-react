@@ -8,7 +8,8 @@ const LDP = rdf.Namespace("http://www.w3.org/ns/ldp#");
 const ACT = rdf.Namespace("https://www.w3.org/ns/activitystreams#");
 const FOAF = rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const VCARD = rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
-const ACL = new rdf.Namespace("http://www.w3.org/ns/auth/acl#");
+const ACL = rdf.Namespace("http://www.w3.org/ns/auth/acl#");
+const RDF = rdf.Namespace("https://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 const PREQ = rdf.Namespace(
   "https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf#"
 );
@@ -154,6 +155,12 @@ class OverviewPage extends React.Component {
           ),
           rdf.st(
             rdf.sym(ownerNode),
+            RDF("type"),
+            ACL("Authorization"),
+            rdf.sym(ownerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(ownerNode),
             ACL("accessTo"),
             rdf.sym(file),
             rdf.sym(ownerNode).doc()
@@ -174,6 +181,12 @@ class OverviewPage extends React.Component {
             rdf.sym(ownerNode),
             ACL("mode"),
             ACL("Write"),
+            rdf.sym(ownerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(ownerNode),
+            RDF("type"),
+            ACL("Authorization"),
             rdf.sym(ownerNode).doc()
           ),
           rdf.st(
