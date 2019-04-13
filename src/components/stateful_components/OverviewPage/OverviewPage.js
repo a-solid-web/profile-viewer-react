@@ -80,7 +80,6 @@ class OverviewPage extends React.Component {
       const senderStore = rdf.graph();
       const senderFetcher = new rdf.Fetcher(senderStore);
 
-      console.log(sender);
       senderFetcher.load(sender).then(response => {
         const picture = senderStore.any(rdf.sym(sender), VCARD("hasPhoto"));
         const name = senderStore.any(rdf.sym(sender), FOAF("name"));
@@ -99,6 +98,7 @@ class OverviewPage extends React.Component {
 
   acceptRequest(e) {
     const file = e.target.id;
+    console.log(file);
     const sender = e.target.getAttribute("sender");
     const notification = e.target.getAttribute("notification");
     const aclFile = file + "/.acl";

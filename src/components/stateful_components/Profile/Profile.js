@@ -452,7 +452,7 @@ class Profile extends React.Component {
 
     return (
       <Container>
-        {this.props.webId ? (
+        {this.state.webId ? (
           <div>
             <Row>
               <Col>
