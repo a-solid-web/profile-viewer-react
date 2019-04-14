@@ -16,9 +16,12 @@ const DetailModal = props => {
   const requestRisks = request[8];
   const riskEvaluation = request[9];
   const identityEvaluation = request[10];
+  const createdValue = request[12]
+  const expiresValue = request[13]
 
   const riskEvaluationMarkup = riskEvaluation ? <p style={{ color: "green"}}>Has provided a risk assesment</p> : <p style={{ color: "red"}}>Has not provided a risk assesment</p>
   const identityEvaluationMarkup = identityEvaluation ? <p style={{ color: "green"}}>Has provided a linked data profile</p> : <p style={{ color: "red"}}>Has not provided an identity</p>
+  const expirationAssessment = createdValue !== "" && expiresValue !== "" ? <p style={{ color: "green"}}>Has provided a expiring date to permisions</p> : <p style={{ color: "red"}}>Permission has no expiration</p>
 
   return (
     <Modal
@@ -57,13 +60,13 @@ const DetailModal = props => {
               <Row>
                 <Col lg="1" />
                 <Col lg="5">Date of Request:</Col>
-                <Col lg="5">1.1.2019</Col>
+                <Col lg="5">{createdValue}</Col>
                 <Col lg="1" />
               </Row>
               <Row>
                 <Col lg="1" />
                 <Col lg="5">Expiration Date:</Col>
-                <Col lg="5">2.1.2019</Col>
+                <Col lg="5">{expiresValue}</Col>
                 <Col lg="1" />
               </Row>
               <Row>
@@ -142,6 +145,13 @@ const DetailModal = props => {
                 <Col lg="1" />
                 <Col lg>
                   {identityEvaluationMarkup}
+                </Col>
+                <Col lg="1" />
+              </Row>
+              <Row>
+                <Col lg="1" />
+                <Col lg>
+                  {expirationAssessment}
                 </Col>
                 <Col lg="1" />
               </Row>

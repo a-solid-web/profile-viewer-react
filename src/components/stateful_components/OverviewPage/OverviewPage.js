@@ -151,7 +151,9 @@ class OverviewPage extends React.Component {
         [privacyRiskValue, financialRiskValue, legalRiskValue],
         riskEvaluation,
         identityEvaluation,
-        requestStatusValue
+        requestStatusValue,
+        createdValue,
+        expiresValue
       ]);
     });
   }
@@ -187,7 +189,7 @@ class OverviewPage extends React.Component {
 
         accessUpdater.update(delACL, insACL, (uri, ok, message) => {
           if (!ok) console.log("message");
-          this.fetchNotificationAddresses(this.state.webId);
+          else console.log("Added acl triples");
         });
       })
       .catch(err => {
@@ -254,13 +256,25 @@ class OverviewPage extends React.Component {
           )
         ];
 
-        accessUpdater.put(rdf.sym(aclFile), newACLTriples, "text/turtle", (uri, ok, message) => {
-          if (!ok) console.log(message)
-          else this.fetchNotificationAddresses(this.state.webId);
-        });
+        accessUpdater.put(
+          rdf.sym(aclFile),
+          newACLTriples,
+          "text/turtle",
+          (uri, ok, message) => {
+            if (!ok) console.log(message);
+            else console.log("Added accept triples");
+          }
+        );
       });
 
-    const delNotif = [];
+    const delNotif = [
+      rdf.st(
+        rdf.sym(notification),
+        PREQ("hasStatus"),
+        rdf.lit(""),
+        rdf.sym(notification).doc()
+      )
+    ];
     const insNotif = [
       rdf.st(
         rdf.sym(notification),
@@ -271,7 +285,8 @@ class OverviewPage extends React.Component {
     ];
     accessUpdater.update(delNotif, insNotif, (uri, ok, message) => {
       if (!ok) console.log(message);
-      else this.fetchNotificationAddresses(this.state.webId);
+      else console.log("Added accept triples");
+      window.location = window.location.href;
     });
   }
 
@@ -294,7 +309,7 @@ class OverviewPage extends React.Component {
 
     accessUpdater.update(del, ins, (uri, ok, message) => {
       if (!ok) alert(message);
-      else this.fetchNotificationAddresses();
+      else this.fetchNotificationAddresses(this.state.webId);
     });
   }
 
@@ -319,8 +334,8 @@ class OverviewPage extends React.Component {
     const ins = [];
 
     accessUpdater.update(del, ins, (uri, ok, message) => {
-      if (!ok) alert(message);
-      else this.fetchNotificationAddresses();
+      if (!ok) console.log(message);
+      else console.log("Revoked access in .acl file")
     });
 
     const delStatus = [
@@ -334,16 +349,16 @@ class OverviewPage extends React.Component {
 
     const insStatus = [
       rdf.st(
-          rdf.sym(notification),
-          PREQ("hasStatus"),
-          rdf.lit(""),
-          rdf.sym(notification).doc()
+        rdf.sym(notification),
+        PREQ("hasStatus"),
+        rdf.lit(""),
+        rdf.sym(notification).doc()
       )
     ];
 
     accessUpdater.update(delStatus, insStatus, (uri, ok, message) => {
       if (!ok) alert(message);
-      else this.fetchNotificationAddresses();
+      else window.location = window.location.href;
     });
   }
 
