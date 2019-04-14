@@ -295,7 +295,12 @@ class OverviewPage extends React.Component {
     const accessFetcher = new rdf.Fetcher(accessStore);
     const accessUpdater = new rdf.UpdateManager(accessStore);
 
-    const del = [];
+    const del = [rdf.st(
+      rdf.sym(notification),
+      PREQ("hasStatus"),
+      rdf.lit(""),
+      rdf.sym(notification).doc()
+    )];
     const ins = [
       rdf.st(
         rdf.sym(notification),
