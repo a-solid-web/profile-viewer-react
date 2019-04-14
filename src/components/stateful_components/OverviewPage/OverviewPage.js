@@ -108,19 +108,19 @@ class OverviewPage extends React.Component {
         rdf.sym(notificationAddress),
         PREQ("privacyRisklevel")
       );
-      const privacyRiskValue = privacyRisk ? privacyRisk.value : "";
+      const privacyRiskValue = privacyRisk ? "There is a " + privacyRisk.value + " privacy Risk" : "";
 
       const financialRisk = notificationStore.any(
         rdf.sym(notificationAddress),
         PREQ("financialRisklevel")
       );
-      const financialRiskValue = financialRisk ? financialRisk.value : "";
+      const financialRiskValue = financialRisk ? "There is a " + financialRisk.value + "financial Risk" : "";
 
       const legalRisk = notificationStore.any(
         rdf.sym(notificationAddress),
         PREQ("legalRisklevel")
       );
-      const legalRiskValue = legalRisk ? legalRisk.value : "";
+      const legalRiskValue = legalRisk ? "There is a " + legalRisk.value + "legal Risk" : "";
 
       const risks = [privacyRiskValue, financialRiskValue, legalRiskValue];
       const riskEvaluation = this.evaluateRisks(risks);
