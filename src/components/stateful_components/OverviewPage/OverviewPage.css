@@ -1,0 +1,50 @@
+:root {
+  background-color: #f9fafb;
+}
+
+.grid-container {
+  background-color: #f9fafb;
+  display: grid;
+  grid-gap: 0px 25px;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 3em 3em 1fr;
+
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+#toggle {
+  grid-column: 2/3;
+  grid-row: 2/3;
+
+  display: flex;
+  justify-content: space-around;
+  background-color: #ffff;
+}
+
+#toggle > div:first-of-type {
+  color: #3256d7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid #3256d7;
+  width: 100%;
+}
+
+#toggle > div:last-of-type {
+  color: #c2c2c2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid #f6f6f6;
+  width: 100%;
+}
+
+.requestcards {
+  grid-column: 2/3;
+  grid-row: 3;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: space-around;
+}

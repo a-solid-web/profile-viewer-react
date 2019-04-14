@@ -1,0 +1,2179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add a request to the overview page 1`] = `
+<div
+  addRequest={[Function]}
+  className="grid-container"
+  removeRequest={[Function]}
+>
+  <div
+    id="toggle"
+  >
+    <div>
+      Requests
+    </div>
+    <div>
+      Activity
+    </div>
+  </div>
+  <div
+    className="requestcards"
+  >
+    <div
+      className="requestcards-card-request"
+    >
+      Looks like you don't have any requests at the moment
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Add a request to the overview page 2`] = `
+<div
+  addRequest={[Function]}
+  className="grid-container"
+  removeRequest={[Function]}
+>
+  <div
+    id="toggle"
+  >
+    <div>
+      Requests
+    </div>
+    <div>
+      Activity
+    </div>
+  </div>
+  <div
+    className="requestcards"
+  >
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Ludwig Schubert
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your comic collection
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Eat your food
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Remove a request from the overview page 1`] = `
+<div
+  addRequest={[Function]}
+  className="grid-container"
+  removeRequest={[Function]}
+>
+  <div
+    id="toggle"
+  >
+    <div>
+      Requests
+    </div>
+    <div>
+      Activity
+    </div>
+  </div>
+  <div
+    className="requestcards"
+  >
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Remove a request from the overview page 2`] = `
+<div
+  addRequest={[Function]}
+  className="grid-container"
+  removeRequest={[Function]}
+>
+  <div
+    id="toggle"
+  >
+    <div>
+      Requests
+    </div>
+    <div>
+      Activity
+    </div>
+  </div>
+  <div
+    className="requestcards"
+  >
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Remove a request from the overview page 3`] = `
+<div
+  addRequest={[Function]}
+  className="grid-container"
+  removeRequest={[Function]}
+>
+  <div
+    id="toggle"
+  >
+    <div>
+      Requests
+    </div>
+    <div>
+      Activity
+    </div>
+  </div>
+  <div
+    className="requestcards"
+  >
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Request cards are displayed properly 1`] = `
+<div
+  addRequest={[Function]}
+  className="grid-container"
+  removeRequest={[Function]}
+>
+  <div
+    id="toggle"
+  >
+    <div>
+      Requests
+    </div>
+    <div>
+      Activity
+    </div>
+  </div>
+  <div
+    className="requestcards"
+  >
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      className="requestcard"
+    >
+      <div
+        className="requestcard-header"
+      >
+        <img
+          alt="avatar"
+          className="requestcard-header-avatar"
+          src="https://via.placeholder.com/40?text=profile+picture"
+        />
+        <strong>
+          Malte Sielski
+        </strong>
+         wants to:
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        View your phone number
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+      <div
+        className="requestcard-request"
+      >
+        Edit your Birthdate
+        <div>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Accept
+          </button>
+          <button
+            className="Button-module_button__1-3q_ Button-module_button-outlined__22h7J requestcard-request-button"
+            type="button"
+          >
+            Deny
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
