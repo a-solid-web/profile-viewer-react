@@ -1,39 +1,60 @@
 import React from "react";
 import "./RequestCard.css";
-import { Button } from "yoda-design-system";
+import { Button, Typography } from "yoda-design-system";
+import { Col, Row } from "react-bootstrap";
 
-class RequestCard extends React.Component {
-  render() {
-    const request = this.props.request;
-    const author = request[0];
-    const sender = request[1];
-    const avatar = request[2];
-    const permissions = request[3];
-    const requestedRessource = request[4];
-    const notification = request[5]
+const RequestCard = props => {
+  const request = props.request;
+  const author = request[0];
+  const sender = request[1];
+  const avatar = request[2];
+  const permissions = request[3];
+  const requestedRessource = request[4];
+  const notification = request[5];
+  const requestStatus = request[11];
 
-    return (
-      <div className="requestcard">
-        <div className="requestcard-header">
-          <img
-            className="requestcard-header-avatar"
-            src={avatar}
-            alt="avatar"
-          />
-          <strong>{author}</strong> wants to:
-        </div>
-        {permissions.map((permission, j) => {
-          return (
-            <div className="requestcard-request" key={j}>
-              {permission}
+  return (
+    <div className="requestcard">
+      <div className="requestcard-header">
+        <img className="requestcard-header-avatar" src={avatar} alt="avatar" />
+        <strong>{author}</strong> wants to: {requestStatus == "Accepted" ? <Typography style={{ color: "green", marginLeft: "20%" }}>Accepted</Typography> : ""}
+      </div>
+      {permissions.map((permission, j) => {
+        return (
+          <div className="requestcard-request" key={j}>
+            <Col>{permission}</Col>
+            <Col>
+              <p
+                style={{ color: "#00F" }}
+                onClick={props.onToggle}
+                index={props.index}
+              >
+                More Information
+              </p>
+            </Col>
+            {requestStatus == "Accepted" ? (
+              <Row>
+                <Col lg="6">
+                  <Button
+                    onClick={props.onRevoke}
+                    variant="outlined"
+                    sender={sender}
+                    notification={notification}
+                    id={requestedRessource}
+                  >
+                    Revoke
+                  </Button>
+                </Col>
+              </Row>
+            ) : (
               <div>
                 <Button
-                  className="requestcard-request-button"
+                  className="requestƒcard-request-button"
                   variant="outlined"
                   sender={sender}
                   notification={notification}
                   id={requestedRessource}
-                  onClick={this.props.onAccept}
+                  onClick={props.onAccept}
                 >
                   Accept
                 </Button>
@@ -43,17 +64,17 @@ class RequestCard extends React.Component {
                   sender={sender}
                   notification={notification}
                   id={requestedRessource}
-                  onClick={this.props.onDeny}
+                  onClick={props.onDeny}
                 >
                   Deny
                 </Button>
               </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-}
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 export default RequestCard;

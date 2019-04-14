@@ -3,13 +3,10 @@ import rdf from "rdflib";
 import auth from "solid-auth-client";
 import "./OverviewPage.css";
 import RequestCard from "../../functional_components/RequestCard";
+import DetailModal from "../../functional_components/DetailModal";
 
 const LDP = rdf.Namespace("http://www.w3.org/ns/ldp#");
-const ACT = rdf.Namespace("https://www.w3.org/ns/activitystreams#");
-const FOAF = rdf.Namespace("http://xmlns.com/foaf/0.1/");
-const VCARD = rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
 const ACL = rdf.Namespace("http://www.w3.org/ns/auth/acl#");
-const RDF = rdf.Namespace("https://www.w3.org/1999/02/22-rdf-syntax-ns#type");
 const PREQ = rdf.Namespace(
   "https://a-solid-web.github.io/permission-ontology/permissionrequests.rdf#"
 );
@@ -27,7 +24,9 @@ class OverviewPage extends React.Component {
 
     this.state = {
       webId: this.props.webId,
-      requests: []
+      requests: [],
+      currentRequest: 0,
+      showModal: false
     };
   }
 
@@ -49,6 +48,16 @@ class OverviewPage extends React.Component {
         this.fetchNotification(notificationAddressValue);
       });
     });
+  }
+
+  evaluateRisks(risks) {
+    var result = true;
+    risks.forEach(risk => {
+      if (risk === "") {
+        result = false;
+      }
+    });
+    return result;
   }
 
   fetchNotification(notificationAddress) {
@@ -77,22 +86,73 @@ class OverviewPage extends React.Component {
       );
       const requestedRessourceValue = requestedRessource.value;
 
-      const senderStore = rdf.graph();
-      const senderFetcher = new rdf.Fetcher(senderStore);
+      const created = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("wasSentOn")
+      );
+      const createdValue = created ? created.value : "";
 
-      senderFetcher.load(sender).then(response => {
-        const picture = senderStore.any(rdf.sym(sender), VCARD("hasPhoto"));
-        const name = senderStore.any(rdf.sym(sender), FOAF("name"));
+      const expires = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("expires")
+      );
+      const expiresValue = expires ? expires.value : "";
 
-        this.addRequest([
-          name.value,
-          sender.value,
-          picture.value,
-          ["Access " + requestTypeValue + " (" + requestedRessourceValue + ")"],
-          requestedRessourceValue,
-          notificationAddress
-        ]);
-      });
+      const requestStatus = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("hasStatus")
+      );
+      const requestStatusValue = requestStatus ? requestStatus.value : "";
+
+      const privacyRisk = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("privacyRisklevel")
+      );
+      const privacyRiskValue = privacyRisk ? privacyRisk.value : "";
+
+      const financialRisk = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("financialRisklevel")
+      );
+      const financialRiskValue = financialRisk ? financialRisk.value : "";
+
+      const legalRisk = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("legalRisklevel")
+      );
+      const legalRiskValue = legalRisk ? legalRisk.value : "";
+
+      const risks = [privacyRiskValue, financialRiskValue, legalRiskValue];
+      const riskEvaluation = this.evaluateRisks(risks);
+
+      const requestIntent = notificationStore.any(
+        rdf.sym(notificationAddress),
+        PREQ("hasIntent")
+      );
+      const requestIntentValue = requestIntent
+        ? requestIntent.value.split("#")[1]
+        : "";
+
+      if (!requestIntentValue) {
+        return;
+      }
+
+      const identityEvaluation = sender.value.includes("profile/card#me");
+
+      this.addRequest([
+        sender.value,
+        sender.value,
+        "",
+        ["Access " + requestTypeValue + " (" + requestedRessourceValue + ")"],
+        requestedRessourceValue,
+        notificationAddress,
+        requestTypeValue,
+        requestIntentValue,
+        [privacyRiskValue, financialRiskValue, legalRiskValue],
+        riskEvaluation,
+        identityEvaluation,
+        requestStatusValue
+      ]);
     });
   }
 
@@ -101,10 +161,10 @@ class OverviewPage extends React.Component {
     console.log(file);
     const sender = e.target.getAttribute("sender");
     const notification = e.target.getAttribute("notification");
-    const aclFile = file + "/.acl";
+    const aclFile = file + ".acl";
     const ownerNode = aclFile + "#owner";
     const viewerNode = aclFile + "#viewer";
-    console.log(ownerNode)
+    console.log(ownerNode);
 
     const accessStore = rdf.graph();
     const accessFetcher = new rdf.Fetcher(accessStore);
@@ -125,24 +185,9 @@ class OverviewPage extends React.Component {
           )
         ];
 
-        accessUpdater.put(delACL, insACL, (uri, ok, message) => {
-          console.log("New triples have been added.");
-        });
-
-        const delNotif = [];
-        const insNotif = [
-          rdf.st(
-            rdf.sym(
-              notification,
-              PREQ("hasStatus"),
-              rdf.lit("Accepted"),
-              rdf.sym(viewerNode).doc()
-            )
-          )
-        ];
-
-        accessUpdater.put(delNotif, insNotif, (uri, ok, message) => {
-          console.log("New triples have been added.");
+        accessUpdater.update(delACL, insACL, (uri, ok, message) => {
+          if (!ok) console.log("message");
+          this.fetchNotificationAddresses(this.state.webId);
         });
       })
       .catch(err => {
@@ -155,13 +200,13 @@ class OverviewPage extends React.Component {
           ),
           rdf.st(
             rdf.sym(ownerNode),
-            RDF("type"),
-            ACL("Authorization"),
+            ACL("accessTo"),
+            rdf.sym(file),
             rdf.sym(ownerNode).doc()
           ),
           rdf.st(
             rdf.sym(ownerNode),
-            ACL("accessTo"),
+            ACL("defaultForNew"),
             rdf.sym(file),
             rdf.sym(ownerNode).doc()
           ),
@@ -184,12 +229,6 @@ class OverviewPage extends React.Component {
             rdf.sym(ownerNode).doc()
           ),
           rdf.st(
-            rdf.sym(ownerNode),
-            RDF("type"),
-            ACL("Authorization"),
-            rdf.sym(ownerNode).doc()
-          ),
-          rdf.st(
             rdf.sym(viewerNode),
             ACL("agent"),
             rdf.sym(sender),
@@ -203,27 +242,109 @@ class OverviewPage extends React.Component {
           ),
           rdf.st(
             rdf.sym(viewerNode),
+            ACL("defaultForNew"),
+            rdf.sym(file),
+            rdf.sym(viewerNode).doc()
+          ),
+          rdf.st(
+            rdf.sym(viewerNode),
             ACL("mode"),
             ACL("Read"),
             rdf.sym(viewerNode).doc()
           )
         ];
 
-        accessUpdater.put(
-          rdf.sym(aclFile),
-          newACLTriples,
-          "text/turtle",
-          (uri, ok, message) => {
-            console.log(
-              "New Acl file has been created. New triples have already been added."
-            );
-          }
-        );
+        accessUpdater.put(rdf.sym(aclFile), newACLTriples, "text/turtle", (uri, ok, message) => {
+          if (!ok) console.log(message)
+          else this.fetchNotificationAddresses(this.state.webId);
+        });
       });
+
+    const delNotif = [];
+    const insNotif = [
+      rdf.st(
+        rdf.sym(notification),
+        PREQ("hasStatus"),
+        rdf.lit("Accepted"),
+        rdf.sym(notification).doc()
+      )
+    ];
+    accessUpdater.update(delNotif, insNotif, (uri, ok, message) => {
+      if (!ok) console.log(message);
+      else this.fetchNotificationAddresses(this.state.webId);
+    });
   }
 
   denyRequest(e) {
-    const file = e.target.id;
+    const notification = e.target.getAttribute("notification");
+
+    const accessStore = rdf.graph();
+    const accessFetcher = new rdf.Fetcher(accessStore);
+    const accessUpdater = new rdf.UpdateManager(accessStore);
+
+    const del = [];
+    const ins = [
+      rdf.st(
+        rdf.sym(notification),
+        PREQ("hasStatus"),
+        rdf.lit("Denied"),
+        rdf.sym(notification).doc()
+      )
+    ];
+
+    accessUpdater.update(del, ins, (uri, ok, message) => {
+      if (!ok) alert(message);
+      else this.fetchNotificationAddresses();
+    });
+  }
+
+  revokeRequest(e) {
+    const notification = e.target.getAttribute("notification");
+    const sender = e.target.getAttribute("sender");
+    const aclFile = e.target.id + ".acl";
+    const viewerNode = aclFile + "#viewer";
+
+    const accessStore = rdf.graph();
+    const accessFetcher = new rdf.Fetcher(accessStore);
+    const accessUpdater = new rdf.UpdateManager(accessStore);
+
+    const del = [
+      rdf.st(
+        rdf.sym(viewerNode),
+        ACL("agent"),
+        rdf.sym(sender),
+        rdf.sym(viewerNode).doc()
+      )
+    ];
+    const ins = [];
+
+    accessUpdater.update(del, ins, (uri, ok, message) => {
+      if (!ok) alert(message);
+      else this.fetchNotificationAddresses();
+    });
+
+    const delStatus = [
+      rdf.st(
+        rdf.sym(notification),
+        PREQ("hasStatus"),
+        rdf.lit("Accepted"),
+        rdf.sym(notification).doc()
+      )
+    ];
+
+    const insStatus = [
+      rdf.st(
+          rdf.sym(notification),
+          PREQ("hasStatus"),
+          rdf.lit(""),
+          rdf.sym(notification).doc()
+      )
+    ];
+
+    accessUpdater.update(delStatus, insStatus, (uri, ok, message) => {
+      if (!ok) alert(message);
+      else this.fetchNotificationAddresses();
+    });
   }
 
   addNotification(name, sender, picture, requestType) {
@@ -252,6 +373,18 @@ class OverviewPage extends React.Component {
     }
   }
 
+  toggleModal(e) {
+    if (!this.state.showModal) {
+      this.setState({
+        showModal: !this.state.showModal,
+        currentRequest: e.target.getAttribute("index")
+      });
+    }
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  }
+
   getRequests() {
     if (this.state.requests.length === 0) {
       return (
@@ -262,14 +395,18 @@ class OverviewPage extends React.Component {
     } else {
       const requests = this.state.requests;
       return requests.map((item, i) => {
-        return (
+        return item[11] !== "Denied" ? (
           <RequestCard
             key={i}
-            avatar={"https://via.placeholder.com/40?text=profile+picture"}
+            index={i}
             request={item}
+            onToggle={this.toggleModal.bind(this)}
             onAccept={this.acceptRequest.bind(this)}
             onDeny={this.denyRequest.bind(this)}
+            onRevoke={this.revokeRequest.bind(this)}
           />
+        ) : (
+          ""
         );
       });
     }
@@ -302,6 +439,15 @@ class OverviewPage extends React.Component {
           <div>Activity</div>
         </div>
         <div className="requestcards">{requests}</div>
+        {this.state.requests[this.state.currentRequest] ? (
+          <DetailModal
+            show={this.state.showModal}
+            onHide={this.toggleModal.bind(this)}
+            request={this.state.requests[this.state.currentRequest]}
+          />
+        ) : (
+          ""
+        )}
       </div>
     );
   }

@@ -30,7 +30,7 @@ class HealthPage extends React.Component {
       var contentType = "image";
       let pictureURl = webId.replace(
         "/profile/card#me",
-        "/private/health/" + filename
+        "/health/" + filename
       );
       fetcher.webOperation("PUT", pictureURl, {
         data: data,
@@ -38,6 +38,7 @@ class HealthPage extends React.Component {
       });
     };
     reader.readAsArrayBuffer(filePath);
+    this.fetchPictures();
   }
 
   fetchPictures() {
@@ -46,13 +47,13 @@ class HealthPage extends React.Component {
 
     const healthDataAddress = this.state.webId.replace(
       "profile/card#me",
-      "private/health/"
+      "health/"
     );
 
     fetcher.load(healthDataAddress).then(response => {
       const picture = store.any(rdf.sym(healthDataAddress), LDP("contains"));
       this.setState({
-        picture: picture.value
+        picture: picture ? picture.value : ""
       });
     });
   }
