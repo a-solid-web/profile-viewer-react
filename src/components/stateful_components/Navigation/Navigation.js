@@ -71,12 +71,12 @@ class Navigation extends React.Component {
           </Navbar.Brand>
           <Nav className="mr-auto">
             <NavLink
-              to="/overview"
+              to="/"
               style={{ color: "#000", marginLeft: "10%" }}
             >
               Overview
             </NavLink>
-            <NavLink to="/" style={{ color: "#000", marginLeft: "10%" }}>
+            <NavLink to="/profile" style={{ color: "#000", marginLeft: "10%" }}>
               Profile
               </NavLink>
             <NavLink

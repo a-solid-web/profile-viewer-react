@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import auth from "solid-auth-client";
 import Profile from "./components/stateful_components/Profile";
-import ContactsPage from "./components/stateful_components/ContactsPage"
+import ContactsPage from "./components/stateful_components/ContactsPage";
 import Navigation from "./components/stateful_components/Navigation";
 import OverviewPage from "./components/stateful_components/OverviewPage/OverviewPage";
 import HealthPage from "./components/stateful_components/HealthPage/HealthPage";
@@ -57,18 +57,18 @@ class App extends React.Component {
         <div>
           <Navigation login={this.login.bind(this)} webId={this.state.webId} />
           <Switch>
-            <Route path="/overview" render={() => <OverviewPage />} />
             <Route
               path="/"
+              render={() => <OverviewPage />}
+            />
+            <Route
+              path="/profile"
               render={() => <Profile logout={this.logout.bind(this)} />}
               exact
             />
             <Route
               path="/health"
-              render={() => (
-                <HealthPage
-                />
-              )}
+              render={() => <HealthPage />}
               exact
             />
             <Route path="/contacts" render={() => <ContactsPage />} exact />

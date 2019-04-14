@@ -283,8 +283,7 @@ class OverviewPage extends React.Component {
     ];
     accessUpdater.update(delNotif, insNotif, (uri, ok, message) => {
       if (!ok) console.log(message);
-      else console.log("Added Accepted triple");
-      window.location = window.location.href;
+      else console.log("Added Accepted triple"); window.location = "https://a-solid-web.github.io/profile-viewer-react/";
     });
   }
 
@@ -295,12 +294,14 @@ class OverviewPage extends React.Component {
     const accessFetcher = new rdf.Fetcher(accessStore);
     const accessUpdater = new rdf.UpdateManager(accessStore);
 
-    const del = [rdf.st(
-      rdf.sym(notification),
-      PREQ("hasStatus"),
-      rdf.lit(""),
-      rdf.sym(notification).doc()
-    )];
+    const del = [
+      rdf.st(
+        rdf.sym(notification),
+        PREQ("hasStatus"),
+        rdf.lit(""),
+        rdf.sym(notification).doc()
+      )
+    ];
     const ins = [
       rdf.st(
         rdf.sym(notification),
@@ -312,7 +313,7 @@ class OverviewPage extends React.Component {
 
     accessUpdater.update(del, ins, (uri, ok, message) => {
       if (!ok) alert(message);
-      else window.location = window.location.href;
+      else window.location = "https://a-solid-web.github.io/profile-viewer-react/";
     });
   }
 
@@ -361,7 +362,7 @@ class OverviewPage extends React.Component {
 
     accessUpdater.update(delStatus, insStatus, (uri, ok, message) => {
       if (!ok) alert(message);
-      else window.location = window.location.href;
+      else window.location = "https://a-solid-web.github.io/profile-viewer-react/";
     });
   }
 
