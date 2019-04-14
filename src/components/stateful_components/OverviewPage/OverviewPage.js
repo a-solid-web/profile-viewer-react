@@ -178,18 +178,16 @@ class OverviewPage extends React.Component {
         const delACL = [];
         const insACL = [
           rdf.st(
-            rdf.sym(
-              viewerNode,
-              ACL("agent"),
-              rdf.sym(sender),
-              rdf.sym(viewerNode).doc()
-            )
+            rdf.sym(viewerNode),
+            ACL("agent"),
+            rdf.sym(sender),
+            rdf.sym(viewerNode).doc()
           )
         ];
 
         accessUpdater.update(delACL, insACL, (uri, ok, message) => {
-          if (!ok) console.log("message");
-          else console.log("Added acl triples");
+          if (!ok) console.log(message);
+          else console.log("Added .acl triples");
         });
       })
       .catch(err => {
@@ -262,7 +260,7 @@ class OverviewPage extends React.Component {
           "text/turtle",
           (uri, ok, message) => {
             if (!ok) console.log(message);
-            else console.log("Added accept triples");
+            else console.log("Added .acl triples");
           }
         );
       });
@@ -285,7 +283,7 @@ class OverviewPage extends React.Component {
     ];
     accessUpdater.update(delNotif, insNotif, (uri, ok, message) => {
       if (!ok) console.log(message);
-      else console.log("Added accept triples");
+      else console.log("Added Accepted triple");
       window.location = window.location.href;
     });
   }
@@ -309,7 +307,7 @@ class OverviewPage extends React.Component {
 
     accessUpdater.update(del, ins, (uri, ok, message) => {
       if (!ok) alert(message);
-      else this.fetchNotificationAddresses(this.state.webId);
+      else window.location = window.location.href;
     });
   }
 
@@ -335,7 +333,7 @@ class OverviewPage extends React.Component {
 
     accessUpdater.update(del, ins, (uri, ok, message) => {
       if (!ok) console.log(message);
-      else console.log("Revoked access in .acl file")
+      else console.log("Revoked access in .acl file");
     });
 
     const delStatus = [
