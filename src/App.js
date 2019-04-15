@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Profile from "./components/stateful_components/Profile";
+import ProfilePage from "./components/stateful_components/ProfilePage";
 import Navigation from "./components/stateful_components/Navigation";
 import auth from "solid-auth-client";
 
@@ -64,6 +65,7 @@ class App extends React.Component {
               )}
               exact
             />
+            <Route path="/profile" render={() => <ProfilePage />} />
           </Switch>
         </div>
       </BrowserRouter>

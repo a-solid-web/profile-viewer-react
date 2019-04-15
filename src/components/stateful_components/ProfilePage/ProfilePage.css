@@ -1,0 +1,84 @@
+body {
+  background-color: #f9fafb;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr [Information] 5fr 1fr [Permission] 4fr 1fr;
+
+  padding-top: 50px;
+}
+
+.profileInformation {
+  grid-column: Information;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.profileInformation-header {
+  background-color: #fff;
+  padding: 15px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.profileInformation-header-avatar {
+  width: 60px;
+  height: 60px;
+}
+
+.profileInformation-header-user {
+  padding-left: 20px;
+}
+
+.profileInformation-header-user-name {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.profileInformation-header-user-webid {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: normal;
+  color: #1e41bc;
+}
+
+.profileInformation-header-edit {
+  margin-left: auto;
+}
+
+.profileInformation-addCategory {
+  margin-top: 8px;
+}
+
+.permissionInterface {
+  grid-column: Permission;
+  height: 431px;
+
+  background-color: #fff;
+  box-shadow: 0px 0px 25px rgba(43, 47, 62, 0.06), 0px 1px 0px #c4c4c4;
+  border-radius: 5px;
+}
+
+@media (max-width: 1000px) {
+  .grid-container {
+    grid-template-columns: 1fr [Information] 12fr 1fr;
+  }
+
+  .permissionInterface {
+    grid: unset;
+
+    display: none;
+    position: fixed;
+    left: 12%;
+    top: 25%;
+    width: 76%;
+    height: 50%;
+  }
+}
