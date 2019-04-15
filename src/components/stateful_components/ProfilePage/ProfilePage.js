@@ -7,6 +7,7 @@ class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.toggleEditing = this.toggleEditing.bind(this);
+    this.setPermissionInterface = this.setPermissionInterface.bind(this);
     this.state = {
       editing: false,
       profileCardInformation: [
@@ -43,13 +44,18 @@ class ProfilePage extends React.Component {
             { name: "work email", content: "irakli@myo.de" }
           ]
         }
-      ]
+      ],
+      permissionInterface: "undefined"
     };
   }
 
   toggleEditing() {
     const editingState = this.state.editing;
     this.setState({ editing: !editingState });
+  }
+
+  setPermissionInterface(value) {
+    this.setState({ permissionInterface: value });
   }
 
   getProfileCards() {
@@ -102,7 +108,9 @@ class ProfilePage extends React.Component {
             </Button>
           ) : null}
         </div>
-        <div className="permissionInterface" />
+        <div className="permissionInterface">
+          {this.state.permissionInterface}
+        </div>
       </div>
     );
   }

@@ -16,7 +16,7 @@ const ProfileCard = props => {
             key={index}
             className="profileCard-information"
             onClick={() => {
-              console.log(item.name);
+              props.onClick(item.name);
             }}
           >
             <div className="profileCard-information-name">{item.name}</div>
