@@ -55,7 +55,14 @@ class ProfilePage extends React.Component {
   getProfileCards() {
     const profileCardInformation = this.state.profileCardInformation;
     return profileCardInformation.map((item, index) => {
-      return <ProfileCard content={item} editing={this.state.editing} />;
+      return (
+        <ProfileCard
+          key={index}
+          content={item}
+          editing={this.state.editing}
+          onClick={this.setPermissionInterface}
+        />
+      );
     });
   }
 

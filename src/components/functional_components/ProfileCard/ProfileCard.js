@@ -10,9 +10,10 @@ const ProfileCard = props => {
 
   return (
     <div className="profileCard">
-      {information.map(item => {
+      {information.map((item, index) => {
         return (
           <div
+            key={index}
             className="profileCard-information"
             onClick={() => {
               console.log(item.name);
@@ -25,7 +26,7 @@ const ProfileCard = props => {
           </div>
         );
       })}
-      {editing ? <Button variant="outlined">add {type}</Button> : null}
+      {editing ? <Button variant="outlined">{"add " + type}</Button> : null}
     </div>
   );
 };
