@@ -1,6 +1,7 @@
 import React from "react";
 import "./ProfilePage.css";
 import ProfileCard from "../../functional_components/ProfileCard";
+import ProfilePermissionInterface from "../../functional_components/ProfilePermissionInterface";
 import { Button } from "yoda-design-system";
 
 class ProfilePage extends React.Component {
@@ -9,17 +10,18 @@ class ProfilePage extends React.Component {
     this.toggleEditing = this.toggleEditing.bind(this);
     this.setPermissionInterface = this.setPermissionInterface.bind(this);
     this.state = {
+      webid: "#",
       editing: false,
       profileCardInformation: [
         {
-          type: "birthday",
+          type: "date",
           information: [{ name: "Birthday", content: "17 August 2000" }]
         },
         {
           type: "address",
           information: [
             {
-              name: "my berlin address",
+              name: "Berlin",
               content: "Bornholmer Straße 17 10439 Berlin Germany"
             },
             {
@@ -32,20 +34,20 @@ class ProfilePage extends React.Component {
           type: "phone number",
           information: [
             { name: "Personal", content: "+49 162 877 4024" },
-            { name: "work cell", content: "+49 152 421 0529" },
-            { name: "tbilisi cell", content: "+995 595 45 50 10" }
+            { name: "work", content: "+49 152 421 0529" },
+            { name: "tbilisi", content: "+995 595 45 50 10" }
           ]
         },
         {
           type: "email address",
           information: [
             { name: "personal", content: "irakli.goder@gmail.com" },
-            { name: "Uni email", content: "irakli.goderdzishvili@code.berlin" },
-            { name: "work email", content: "irakli@myo.de" }
+            { name: "Uni", content: "irakli.goderdzishvili@code.berlin" },
+            { name: "work", content: "irakli@myo.de" }
           ]
         }
       ],
-      permissionInterface: "undefined"
+      activeInformation: "Select an information to edit"
     };
   }
 
@@ -55,7 +57,7 @@ class ProfilePage extends React.Component {
   }
 
   setPermissionInterface(value) {
-    this.setState({ permissionInterface: value });
+    this.setState({ activeInformation: value });
   }
 
   getProfileCards() {
@@ -74,6 +76,7 @@ class ProfilePage extends React.Component {
 
   render() {
     const profileCards = this.getProfileCards();
+
     return (
       <div className="grid-container">
         <div className="profileInformation">
@@ -88,7 +91,7 @@ class ProfilePage extends React.Component {
                 Irakli Goderdzishvili
               </div>
               <div className="profileInformation-header-user-webid">
-                @irakli
+                <a href={this.state.webid}>@irakli</a>
               </div>
             </div>
             <Button
@@ -109,7 +112,9 @@ class ProfilePage extends React.Component {
           ) : null}
         </div>
         <div className="permissionInterface">
-          {this.state.permissionInterface}
+          <ProfilePermissionInterface
+            information={this.state.activeInformation}
+          />
         </div>
       </div>
     );

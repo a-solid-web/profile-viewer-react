@@ -1,0 +1,26 @@
+.permissionInterface-header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px;
+}
+
+hr {
+  margin-top: 0;
+}
+
+.permissionInterface-header-closeButton {
+  color: #000000;
+  border: solid #ffffff 1px;
+  background-color: #ffffff;
+  margin-left: auto;
+}
+
+.permissionInterface-header-closeButton:hover {
+  border: solid black 1px;
+}
+
+.permissionInterface-header-closeButton:active {
+  background-color: lightgray;
+}
