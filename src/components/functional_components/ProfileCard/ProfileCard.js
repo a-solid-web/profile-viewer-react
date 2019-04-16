@@ -16,13 +16,14 @@ const ProfileCard = props => {
             key={index}
             className="profileCard-information"
             onClick={() => {
-              props.onClick(item.name);
+              props.onClick(item.name + " " + type);
             }}
           >
             <div className="profileCard-information-name">{item.name}</div>
             <div className="profileCard-information-content">
               {item.content}
             </div>
+            {editing ? <Button variant="outlined">Delete</Button> : null}
           </div>
         );
       })}
