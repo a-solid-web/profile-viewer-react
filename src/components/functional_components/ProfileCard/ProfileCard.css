@@ -14,7 +14,12 @@
 }
 
 .profileCard-information:hover {
-  border: outset black 1px;
+  /* border: outset black 1px; */
+  background-color: #eeeeee;
+}
+
+.profileCard-information:active {
+  background-color: lightgray;
 }
 
 .profileCard-information-name {
