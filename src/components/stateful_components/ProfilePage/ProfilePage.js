@@ -9,6 +9,7 @@ class ProfilePage extends React.Component {
     super(props);
     this.toggleEditing = this.toggleEditing.bind(this);
     this.setPermissionInterface = this.setPermissionInterface.bind(this);
+    this.closePermissionInterface = this.closePermissionInterface.bind(this);
     this.state = {
       webid: "#",
       editing: false,
@@ -47,7 +48,8 @@ class ProfilePage extends React.Component {
           ]
         }
       ],
-      activeInformation: "Select an information to edit"
+      activeInformation: "Select an information to edit",
+      editPermissions: false
     };
   }
 
@@ -58,6 +60,11 @@ class ProfilePage extends React.Component {
 
   setPermissionInterface(value) {
     this.setState({ activeInformation: value });
+    this.setState({ editPermissions: true });
+  }
+
+  closePermissionInterface() {
+    this.setState({ editPermissions: false });
   }
 
   getProfileCards() {
@@ -78,7 +85,12 @@ class ProfilePage extends React.Component {
     const profileCards = this.getProfileCards();
 
     return (
-      <div className="grid-container">
+      <div
+        className={
+          "grid-container" +
+          (this.state.editPermissions ? " grid-container--editPermissions" : "")
+        }
+      >
         <div className="profileInformation">
           <div className="profileInformation-header">
             <img
@@ -114,6 +126,7 @@ class ProfilePage extends React.Component {
         <div className="permissionInterface">
           <ProfilePermissionInterface
             information={this.state.activeInformation}
+            closeMethod={this.closePermissionInterface}
           />
         </div>
       </div>

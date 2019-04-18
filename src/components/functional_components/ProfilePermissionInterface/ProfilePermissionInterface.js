@@ -9,7 +9,12 @@ const ProfilePermissionInterface = props => {
         <div>
           Sharing for <strong>{information}</strong>
         </div>
-        <button className="permissionInterface-header-closeButton">X</button>
+        <button
+          className="permissionInterface-header-closeButton"
+          onClick={props.closeMethod}
+        >
+          X
+        </button>
       </div>
       <hr />
     </div>

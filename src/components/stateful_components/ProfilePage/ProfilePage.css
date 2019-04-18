@@ -4,9 +4,16 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr [Information] 5fr 1fr [Permission] 4fr 1fr;
-
+  grid-template-columns: 3fr [Information] 6fr 3fr;
   padding-top: 50px;
+}
+
+.grid-container--editPermissions {
+  grid-template-columns: 1fr [Information] 5fr 1fr [Permission] 4fr 1fr;
+}
+
+.grid-container--editPermissions .permissionInterface {
+  display: block;
 }
 
 .profileInformation {
@@ -32,6 +39,7 @@ body {
 
 .profileInformation-header-user {
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 .profileInformation-header-user-name {
@@ -58,6 +66,7 @@ body {
 }
 
 .permissionInterface {
+  display: none;
   grid-column: Permission;
   height: 431px;
 
@@ -66,19 +75,24 @@ body {
   border-radius: 5px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1300px) {
   .grid-container {
-    grid-template-columns: 1fr [Information] 12fr 1fr;
+    grid-template-columns: 2fr [Information] 8fr 2fr;
   }
 
   .permissionInterface {
     grid: unset;
 
-    display: none;
     position: fixed;
     left: 12%;
     top: 25%;
     width: 76%;
     height: 50%;
+  }
+}
+
+@media (max-width: 800px) {
+  .grid-container {
+    grid-template-columns: 1fr [Information] 12fr 1fr;
   }
 }
