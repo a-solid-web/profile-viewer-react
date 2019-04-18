@@ -9,7 +9,9 @@ const ProfileCard = props => {
   const information = content.information;
 
   return (
-    <div className="profileCard">
+    <div
+      className={editing ? "profileCard profileCard--editing" : "profileCard"}
+    >
       {information.map((item, index) => {
         return (
           <div
